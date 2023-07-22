@@ -1,6 +1,6 @@
 use proc_macro2::TokenTree;
 use std::collections::HashMap;
-use syn::{parse, Attribute, Data, DeriveInput, Error, Fields, Ident, Result};
+use syn::{parse, Attribute, Data, DeriveInput, Error, Fields, Ident, Result, Type};
 
 /// The parameters of `EnvSettings` derive
 #[derive(Debug, Default)]
@@ -118,7 +118,7 @@ impl EnvSettingsInput {
                 if let Fields::Named(names_fields) = &_struct.fields {
                     let mut fields = Vec::new();
                     for field in &names_fields.named {
-                        if let (Some(field_name), syn::Type::Path(field_type)) =
+                        if let (Some(field_name), Type::Path(field_type)) =
                             (&field.ident, &field.ty)
                         {
                             fields.push((

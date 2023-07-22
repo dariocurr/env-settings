@@ -1,5 +1,9 @@
 #![deny(missing_docs)]
 #![doc(issue_tracker_base_url = "https://github.com/dariocurr/env-settings/issues")]
+#![doc(
+    html_logo_url = "https://raw.githubusercontent.com/dariocurr/env-settings/main/docs/logo.svg",
+    html_favicon_url = "https://raw.githubusercontent.com/dariocurr/env-settings/main/docs/logo.ico"
+)]
 
 //! # Env Settings Derive
 
@@ -108,7 +112,7 @@ fn implement(input: &utils::EnvSettingsInput) -> TokenStream {
 
         impl #struct_name {
 
-            fn new(#(#new_args),*) -> Result<Self, env_settings_utils::EnvSettingsError> {
+            fn new(#(#new_args),*) -> env_settings_utils::EnvSettingsResult<Self> {
                 #file_path_impls
                 #env_variables_impls
 
@@ -118,7 +122,7 @@ fn implement(input: &utils::EnvSettingsInput) -> TokenStream {
                 Ok(instance)
             }
 
-            fn from_env() -> Result<Self, env_settings_utils::EnvSettingsError> {
+            fn from_env() -> env_settings_utils::EnvSettingsResult<Self> {
                 #file_path_impls
                 #env_variables_impls
                 let instance = Self {

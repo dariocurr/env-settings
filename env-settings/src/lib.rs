@@ -1,11 +1,15 @@
 #![deny(missing_docs)]
 #![doc(issue_tracker_base_url = "https://github.com/dariocurr/env-settings/issues")]
+#![doc(
+    html_logo_url = "https://raw.githubusercontent.com/dariocurr/env-settings/main/docs/logo.svg",
+    html_favicon_url = "https://raw.githubusercontent.com/dariocurr/env-settings/main/docs/logo.ico"
+)]
 
 //! # Env settings
 //!
 //! **Env Settings** is a Rust library that helps you to initialize structs using environment variables
 //!
-//! > This Rust library took inspiration from [`pydantic.BaseSettings`](https://docs.pydantic.dev/latest/usage/pydantic_settings/) Python class
+//! > This Rust library took inspiration from [`pydantic's BaseSettings`](https://docs.pydantic.dev/latest/usage/pydantic_settings/) Python class
 //!
 //! ## Installation
 //!
@@ -18,13 +22,13 @@
 //! When you add the `EnvSettings` derive to a `struct`, two methods are added to it
 //!
 //! -   ```ignore
-//!     fn from_env() -> Result<Self, env_settings_utils::EnvSettingsError>
+//!     fn from_env() -> env_settings_utils::EnvSettingsResult<Self>
 //!     ```
 //!
 //!     It creates a new instance using just the environment variables. If something fails, it returns an `env_settings_utils::EnvSettingsError` error
 //!
 //! -   ```ignore
-//!     fn new(...) -> Result<Self, env_settings_utils::EnvSettingsError>
+//!     fn new(...) -> env_settings_utils::EnvSettingsResult<Self>
 //!     ```
 //!
 //!     It creates a new instance using a combination of environment variables and parameters. More in detail, every field value can be passed as parameter wrapped in an `Option` object. Then if the parameter is `Some`, it is used, otherwise the value is recoved from the environment variables. If something fails, it returns an `env_settings_utils::EnvSettingsError` error
@@ -98,6 +102,12 @@
 //! -   `delay`: add it to delay the lookup for environment variables from compilation time to run time
 //! -   `file_path`: add it to specify a file path to read to add some environment variables (e.g. `.env`)
 //! -   `prefix`: add it to specify a prefix to add to the name of the struct fields before matching the environment variables
+//!
+//! ### Variables resolution hierarchy
+//!
+//! 1. Arguments passed to the `new` method (if using `new`).
+//! 2. Environment variables
+//! 3. Variables loaded from a file (e.g. `.env`)
 
 /// The trait to add to the derive
 pub trait EnvSettings {}

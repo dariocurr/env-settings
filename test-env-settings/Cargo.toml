@@ -2,7 +2,9 @@
 name = "test-env-settings"
 
 authors.workspace = true
+categories.workspace = true
 description.workspace = true
+documentation.workspace = true
 edition.workspace = true
 homepage.workspace = true
 keywords.workspace = true
@@ -15,7 +17,7 @@ version.workspace = true
 
 [dev-dependencies]
 env-settings = { path = "./../env-settings" }
-env-settings-derive = { path = "./../env-settings/env-settings-derive" }
-env-settings-utils = { path = "./../env-settings-utils" }
+env-settings-derive = "0.1"
+env-settings-utils = "0.1"
 rstest = "0.18"
-syn = { version = "1.0", features = ["extra-traits"] }
+syn = { version = "2.0", features = ["extra-traits"] }
