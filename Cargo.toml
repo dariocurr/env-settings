@@ -1,0 +1,21 @@
+[workspace]
+members = ["env-settings", "env-settings-utils", "test-env-settings"]
+
+[workspace.package]
+authors = ["Dario Curreri <dariocurr@gmail.com>"]
+description = ""
+documentation = ""
+edition = "2021"
+keywords = [
+	"basesettings",
+	"env variables",
+	"environment",
+	"settings",
+	"variables",
+]
+homepage = "https://github.com/dariocurr/env-settings"
+license = "MIT OR Apache-2.0"
+publish = ["env-settings", "env-settings-derive"]
+readme = "README.md"
+repository = "https://github.com/dariocurr/env-settings"
+version = "0.1.0"

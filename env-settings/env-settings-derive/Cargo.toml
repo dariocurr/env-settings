@@ -1,0 +1,24 @@
+[package]
+name = "env-settings-derive"
+
+authors.workspace = true
+description.workspace = true
+edition.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+license.workspace = true
+readme.workspace = true
+repository.workspace = true
+version.workspace = true
+
+[lib]
+proc-macro = true
+
+[dependencies]
+env-settings-utils = { path = "./../../env-settings-utils" }
+proc-macro2 = "1.0"
+quote = "1.0"
+syn = "1.0"
+
+[dev-dependencies]
+syn = { version = "1.0", features = ["extra-traits"] }

@@ -1,0 +1,326 @@
+[
+  {
+    "name": "aho-corasick",
+    "version": "1.0.2",
+    "authors": "Andrew Gallant <jamslam@gmail.com>",
+    "repository": "https://github.com/BurntSushi/aho-corasick",
+    "license": "MIT OR Unlicense",
+    "license_file": null,
+    "description": "Fast multiple substring searching."
+  },
+  {
+    "name": "autocfg",
+    "version": "1.1.0",
+    "authors": "Josh Stone <cuviper@gmail.com>",
+    "repository": "https://github.com/cuviper/autocfg",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "Automatic cfg for Rust compiler features"
+  },
+  {
+    "name": "cfg-if",
+    "version": "1.0.0",
+    "authors": "Alex Crichton <alex@alexcrichton.com>",
+    "repository": "https://github.com/alexcrichton/cfg-if",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "A macro to ergonomically define an item depending on a large number of #[cfg] parameters. Structured like an if-else chain, the first matching branch is the item that gets emitted."
+  },
+  {
+    "name": "dotenvy",
+    "version": "0.15.7",
+    "authors": "Noemi Lapresta <noemi.lapresta@gmail.com>|Craig Hills <chills@gmail.com>|Mike Piccolo <mfpiccolo@gmail.com>|Alice Maz <alice@alicemaz.com>|Sean Griffin <sean@seantheprogrammer.com>|Adam Sharp <adam@sharplet.me>|Arpad Borsos <arpad.borsos@googlemail.com>|Allan Zhang <al@ayz.ai>",
+    "repository": "https://github.com/allan2/dotenvy",
+    "license": "MIT",
+    "license_file": null,
+    "description": "A well-maintained fork of the dotenv crate"
+  },
+  {
+    "name": "env-settings",
+    "version": "0.1.0",
+    "authors": "Dario Curreri <dariocurr@gmail.com>",
+    "repository": "https://github.com/dariocurr/env-settings",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": ""
+  },
+  {
+    "name": "env-settings-derive",
+    "version": "0.1.0",
+    "authors": "Dario Curreri <dariocurr@gmail.com>",
+    "repository": "https://github.com/dariocurr/env-settings",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": ""
+  },
+  {
+    "name": "env-settings-utils",
+    "version": "0.1.0",
+    "authors": "Dario Curreri <dariocurr@gmail.com>",
+    "repository": "https://github.com/dariocurr/env-settings",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": ""
+  },
+  {
+    "name": "futures",
+    "version": "0.3.28",
+    "authors": null,
+    "repository": "https://github.com/rust-lang/futures-rs",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "An implementation of futures and streams featuring zero allocations, composability, and iterator-like interfaces."
+  },
+  {
+    "name": "futures-channel",
+    "version": "0.3.28",
+    "authors": null,
+    "repository": "https://github.com/rust-lang/futures-rs",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "Channels for asynchronous communication using futures-rs."
+  },
+  {
+    "name": "futures-core",
+    "version": "0.3.28",
+    "authors": null,
+    "repository": "https://github.com/rust-lang/futures-rs",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "The core traits and types in for the `futures` library."
+  },
+  {
+    "name": "futures-executor",
+    "version": "0.3.28",
+    "authors": null,
+    "repository": "https://github.com/rust-lang/futures-rs",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "Executors for asynchronous tasks based on the futures-rs library."
+  },
+  {
+    "name": "futures-io",
+    "version": "0.3.28",
+    "authors": null,
+    "repository": "https://github.com/rust-lang/futures-rs",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "The `AsyncRead`, `AsyncWrite`, `AsyncSeek`, and `AsyncBufRead` traits for the futures-rs library."
+  },
+  {
+    "name": "futures-macro",
+    "version": "0.3.28",
+    "authors": null,
+    "repository": "https://github.com/rust-lang/futures-rs",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "The futures-rs procedural macro implementations."
+  },
+  {
+    "name": "futures-sink",
+    "version": "0.3.28",
+    "authors": null,
+    "repository": "https://github.com/rust-lang/futures-rs",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "The asynchronous `Sink` trait for the futures-rs library."
+  },
+  {
+    "name": "futures-task",
+    "version": "0.3.28",
+    "authors": null,
+    "repository": "https://github.com/rust-lang/futures-rs",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "Tools for working with tasks."
+  },
+  {
+    "name": "futures-timer",
+    "version": "3.0.2",
+    "authors": "Alex Crichton <alex@alexcrichton.com>",
+    "repository": "https://github.com/async-rs/futures-timer",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "Timeouts for futures."
+  },
+  {
+    "name": "futures-util",
+    "version": "0.3.28",
+    "authors": null,
+    "repository": "https://github.com/rust-lang/futures-rs",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "Common utilities and extension traits for the futures-rs library."
+  },
+  {
+    "name": "glob",
+    "version": "0.3.1",
+    "authors": "The Rust Project Developers",
+    "repository": "https://github.com/rust-lang/glob",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "Support for matching file paths against Unix shell style patterns."
+  },
+  {
+    "name": "memchr",
+    "version": "2.5.0",
+    "authors": "Andrew Gallant <jamslam@gmail.com>|bluss",
+    "repository": "https://github.com/BurntSushi/memchr",
+    "license": "MIT OR Unlicense",
+    "license_file": null,
+    "description": "Safe interface to memchr."
+  },
+  {
+    "name": "pin-project-lite",
+    "version": "0.2.10",
+    "authors": null,
+    "repository": "https://github.com/taiki-e/pin-project-lite",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "A lightweight version of pin-project written with declarative macros."
+  },
+  {
+    "name": "pin-utils",
+    "version": "0.1.0",
+    "authors": "Josef Brandl <mail@josefbrandl.de>",
+    "repository": "https://github.com/rust-lang-nursery/pin-utils",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "Utilities for pinning"
+  },
+  {
+    "name": "proc-macro2",
+    "version": "1.0.66",
+    "authors": "David Tolnay <dtolnay@gmail.com>|Alex Crichton <alex@alexcrichton.com>",
+    "repository": "https://github.com/dtolnay/proc-macro2",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "A substitute implementation of the compiler's `proc_macro` API to decouple token-based libraries from the procedural macro use case."
+  },
+  {
+    "name": "quote",
+    "version": "1.0.32",
+    "authors": "David Tolnay <dtolnay@gmail.com>",
+    "repository": "https://github.com/dtolnay/quote",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "Quasi-quoting macro quote!(...)"
+  },
+  {
+    "name": "regex",
+    "version": "1.9.1",
+    "authors": "The Rust Project Developers|Andrew Gallant <jamslam@gmail.com>",
+    "repository": "https://github.com/rust-lang/regex",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "An implementation of regular expressions for Rust. This implementation uses finite automata and guarantees linear time matching on all inputs."
+  },
+  {
+    "name": "regex-automata",
+    "version": "0.3.3",
+    "authors": "The Rust Project Developers|Andrew Gallant <jamslam@gmail.com>",
+    "repository": "https://github.com/rust-lang/regex/tree/master/regex-automata",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "Automata construction and matching using regular expressions."
+  },
+  {
+    "name": "regex-syntax",
+    "version": "0.7.4",
+    "authors": "The Rust Project Developers|Andrew Gallant <jamslam@gmail.com>",
+    "repository": "https://github.com/rust-lang/regex/tree/master/regex-syntax",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "A regular expression parser."
+  },
+  {
+    "name": "relative-path",
+    "version": "1.8.0",
+    "authors": "John-John Tedro <udoprog@tedro.se>",
+    "repository": "https://github.com/udoprog/relative-path",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "Portable, relative paths for Rust."
+  },
+  {
+    "name": "rstest",
+    "version": "0.18.1",
+    "authors": "Michele d'Amico <michele.damico@gmail.com>",
+    "repository": "https://github.com/la10736/rstest",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "Rust fixture based test framework. It use procedural macro to implement fixtures and table based tests."
+  },
+  {
+    "name": "rstest_macros",
+    "version": "0.18.1",
+    "authors": "Michele d'Amico <michele.damico@gmail.com>",
+    "repository": "https://github.com/la10736/rstest",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "Rust fixture based test framework. It use procedural macro to implement fixtures and table based tests."
+  },
+  {
+    "name": "rustc_version",
+    "version": "0.4.0",
+    "authors": "Dirkjan Ochtman <dirkjan@ochtman.nl>|Marvin Löbel <loebel.marvin@gmail.com>",
+    "repository": "https://github.com/Kimundi/rustc-version-rs",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "A library for querying the version of a installed rustc compiler"
+  },
+  {
+    "name": "semver",
+    "version": "1.0.18",
+    "authors": "David Tolnay <dtolnay@gmail.com>",
+    "repository": "https://github.com/dtolnay/semver",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "Parser and evaluator for Cargo's flavor of Semantic Versioning"
+  },
+  {
+    "name": "slab",
+    "version": "0.4.8",
+    "authors": "Carl Lerche <me@carllerche.com>",
+    "repository": "https://github.com/tokio-rs/slab",
+    "license": "MIT",
+    "license_file": null,
+    "description": "Pre-allocated storage for a uniform data type"
+  },
+  {
+    "name": "syn",
+    "version": "1.0.109",
+    "authors": "David Tolnay <dtolnay@gmail.com>",
+    "repository": "https://github.com/dtolnay/syn",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "Parser for Rust source code"
+  },
+  {
+    "name": "syn",
+    "version": "2.0.27",
+    "authors": "David Tolnay <dtolnay@gmail.com>",
+    "repository": "https://github.com/dtolnay/syn",
+    "license": "Apache-2.0 OR MIT",
+    "license_file": null,
+    "description": "Parser for Rust source code"
+  },
+  {
+    "name": "test-env-settings",
+    "version": "0.1.0",
+    "authors": null,
+    "repository": null,
+    "license": null,
+    "license_file": null,
+    "description": null
+  },
+  {
+    "name": "unicode-ident",
+    "version": "1.0.11",
+    "authors": "David Tolnay <dtolnay@gmail.com>",
+    "repository": "https://github.com/dtolnay/unicode-ident",
+    "license": "(MIT OR Apache-2.0) AND Unicode-DFS-2016",
+    "license_file": null,
+    "description": "Determine whether characters have the XID_Start or XID_Continue properties according to Unicode Standard Annex #31"
+  }
+]

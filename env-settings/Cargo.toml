@@ -1,0 +1,16 @@
+[package]
+name = "env-settings"
+
+authors.workspace = true
+description.workspace = true
+edition.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+license.workspace = true
+readme.workspace = true
+repository.workspace = true
+version.workspace = true
+
+[dev-dependencies]
+env-settings-derive = { path = "./env-settings-derive" }
+env-settings-utils = { path = "./../env-settings-utils" }
