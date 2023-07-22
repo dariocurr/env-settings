@@ -13,21 +13,22 @@
 //!
 //! ## Installation
 //!
-//! ```ignore
+//! ```sh
 //! cargo add env-settings
+//! cargo add env-settings-derive
 //! ```
 //!
 //! ## Usage
 //!
 //! When you add the `EnvSettings` derive to a `struct`, two methods are added to it
 //!
-//! -   ```ignore
+//! -   ```text
 //!     fn from_env() -> env_settings_utils::EnvSettingsResult<Self>
 //!     ```
 //!
 //!     It creates a new instance using just the environment variables. If something fails, it returns an `env_settings_utils::EnvSettingsError` error
 //!
-//! -   ```ignore
+//! -   ```text
 //!     fn new(...) -> env_settings_utils::EnvSettingsResult<Self>
 //!     ```
 //!
@@ -35,7 +36,7 @@
 //!
 //! ### Basic
 //!
-//! ```
+//! ```rust
 //! // `export name=paolo` in shell or
 //! std::env::set_var("name", "paolo");
 //! // `export age=42` in shell or
@@ -64,7 +65,7 @@
 //!
 //! ### Advanced
 //!
-//! ```
+//! ```rust
 //! use std::io::prelude::Write;
 //!
 //! // `export MY_STRUCT_NAME=paolo` in shell or

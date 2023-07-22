@@ -8,6 +8,7 @@
 
 ```sh
 cargo add env-settings
+cargo add env-settings-derive
 ```
 
 ## Usage

@@ -1,10 +1,11 @@
 [package]
 name = "env-settings-utils"
+documentation = "https://docs.rs/env-settings-utils/"
+publish = true
 
 authors.workspace = true
 categories.workspace = true
 description.workspace = true
-documentation.workspace = true
 edition.workspace = true
 homepage.workspace = true
 keywords.workspace = true
