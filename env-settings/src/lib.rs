@@ -98,6 +98,12 @@
 //! -   `delay`: add it to delay the lookup for environment variables from compilation time to run time
 //! -   `file_path`: add it to specify a file path to read to add some environment variables (e.g. `.env`)
 //! -   `prefix`: add it to specify a prefix to add to the name of the struct fields before matching the environment variables
+//!
+//! ### Variables resolution hierarchy
+//!
+//! 1. Arguments passed to the `new` method (if using `new`).
+//! 2. Environment variables
+//! 3. Variables loaded from a file (e.g. `.env`)
 
 /// The trait to add to the derive
 pub trait EnvSettings {}
