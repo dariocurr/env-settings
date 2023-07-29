@@ -4,19 +4,18 @@ members = ["env-settings", "env-settings-utils", "test-env-settings"]
 [workspace.package]
 authors = ["Dario Curreri <dariocurr@gmail.com>"]
 categories = [
-	"Configuration",
-	"Development tools",
-	"Filesystem",
-	"Operating systems",
-	"Parser implementations",
+	"config",
+	"filesystem",
+	"os",
+	"parsing",
 ]
 description = "Initialize Rust structs using environment variables"
-documentation = ""
+documentation = "http://docs.rs/env-settings/"
 edition = "2021"
 homepage = "https://github.com/dariocurr/env-settings"
 keywords = [
-	"basesettings",
-	"env variables",
+	"BaseSettings",
+	"config",
 	"environment",
 	"settings",
 	"variables",
