@@ -1,5 +1,9 @@
 #![deny(missing_docs)]
 #![doc(issue_tracker_base_url = "https://github.com/dariocurr/env-settings/issues")]
+#![doc(
+    html_logo_url = "https://raw.githubusercontent.com/dariocurr/env-settings/main/docs/logo.svg",
+    html_favicon_url = "https://raw.githubusercontent.com/dariocurr/env-settings/main/docs/logo.ico"
+)]
 
 //! # Env Settings Derive
 

@@ -3,9 +3,17 @@ members = ["env-settings", "env-settings-utils", "test-env-settings"]
 
 [workspace.package]
 authors = ["Dario Curreri <dariocurr@gmail.com>"]
-description = ""
+categories = [
+	"Configuration",
+	"Development tools",
+	"Filesystem",
+	"Operating systems",
+	"Parser implementations",
+]
+description = "Initialize Rust structs using environment variables"
 documentation = ""
 edition = "2021"
+homepage = "https://github.com/dariocurr/env-settings"
 keywords = [
 	"basesettings",
 	"env variables",
@@ -13,7 +21,6 @@ keywords = [
 	"settings",
 	"variables",
 ]
-homepage = "https://github.com/dariocurr/env-settings"
 license = "MIT OR Apache-2.0"
 publish = ["env-settings", "env-settings-derive"]
 readme = "README.md"
