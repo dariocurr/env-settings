@@ -15,4 +15,4 @@ version.workspace = true
 
 [dev-dependencies]
 env-settings-derive = { path = "./env-settings-derive" }
-env-settings-utils = { path = "./../env-settings-utils" }
+env-settings-utils = "0.1"
