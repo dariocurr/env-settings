@@ -112,7 +112,7 @@ fn implement(input: &utils::EnvSettingsInput) -> TokenStream {
 
         impl #struct_name {
 
-            fn new(#(#new_args),*) -> Result<Self, env_settings_utils::EnvSettingsError> {
+            fn new(#(#new_args),*) -> env_settings_utils::EnvSettingsResult<Self> {
                 #file_path_impls
                 #env_variables_impls
 
@@ -122,7 +122,7 @@ fn implement(input: &utils::EnvSettingsInput) -> TokenStream {
                 Ok(instance)
             }
 
-            fn from_env() -> Result<Self, env_settings_utils::EnvSettingsError> {
+            fn from_env() -> env_settings_utils::EnvSettingsResult<Self> {
                 #file_path_impls
                 #env_variables_impls
                 let instance = Self {

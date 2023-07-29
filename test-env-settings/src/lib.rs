@@ -11,7 +11,7 @@
 mod tests {
 
     use env_settings_derive::EnvSettings;
-    use env_settings_utils::EnvSettingsError;
+    use env_settings_utils::{EnvSettingsError, EnvSettingsResult};
     use rstest::rstest;
     use std::io::prelude::Write;
     use std::{collections, env, fmt, fs};
@@ -36,8 +36,8 @@ mod tests {
     }
 
     fn assert_result<T: fmt::Debug + PartialEq>(
-        actual_result: Result<T, EnvSettingsError>,
-        expected_result: Result<T, EnvSettingsError>,
+        actual_result: EnvSettingsResult<T>,
+        expected_result: EnvSettingsResult<T>,
     ) {
         if expected_result.is_err() {
             assert_eq!(
@@ -98,7 +98,7 @@ mod tests {
     fn test_from_env(
         #[case] env_variables: collections::HashMap<&'static str, &'static str>,
         #[case] env_file_variables: collections::HashMap<&'static str, &'static str>,
-        #[case] expected_result: Result<TestEnvSettings, EnvSettingsError>,
+        #[case] expected_result: EnvSettingsResult<TestEnvSettings>,
     ) {
         let mut temp_file = fs::File::create(ENV_FILE_PATH).expect(TEMP_FILE_ERROR);
         env_file_variables.iter().for_each(|(key, value)| {
@@ -160,7 +160,7 @@ mod tests {
     fn test_from_env_with_prefix(
         #[case] env_variables: collections::HashMap<&'static str, &'static str>,
         #[case] env_file_variables: collections::HashMap<&'static str, &'static str>,
-        #[case] expected_result: Result<TestEnvSettingsWithPrefix, EnvSettingsError>,
+        #[case] expected_result: EnvSettingsResult<TestEnvSettingsWithPrefix>,
     ) {
         let env_variables: collections::HashMap<String, &'static str> = env_variables
             .into_iter()
@@ -248,7 +248,7 @@ mod tests {
         #[case] env_file_variables: collections::HashMap<&'static str, &'static str>,
         #[case] name: Option<String>,
         #[case] age: Option<u8>,
-        #[case] expected_result: Result<TestEnvSettings, EnvSettingsError>,
+        #[case] expected_result: EnvSettingsResult<TestEnvSettings>,
     ) {
         let mut temp_file = fs::File::create(ENV_FILE_PATH).expect(TEMP_FILE_ERROR);
         env_file_variables.iter().for_each(|(key, value)| {

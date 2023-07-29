@@ -2,7 +2,7 @@
 
 **Env Settings** is a Rust library that helps you to initialize structs using environment variables
 
-> This Rust library took inspiration from [`pydantic.BaseSettings`](https://docs.pydantic.dev/latest/usage/pydantic_settings/) Python class
+> This Rust library took inspiration from [`pydantic's BaseSettings`](https://docs.pydantic.dev/latest/usage/pydantic_settings/) Python class
 
 ## Installation
 
@@ -15,13 +15,13 @@ cargo add env-settings
 When you add the `EnvSettings` derive to a `struct`, two methods are added to it
 
 -   ```rs
-    fn from_env() -> Result<Self, env_settings_utils::EnvSettingsError>
+    fn from_env() -> env_settings_utils::EnvSettingsResult<Self>
     ```
 
     It creates a new instance using just the environment variables. If something fails, it returns an `env_settings_utils::EnvSettingsError` error
 
 -   ```rs
-    fn new(...) -> Result<Self, env_settings_utils::EnvSettingsError>
+    fn new(...) -> env_settings_utils::EnvSettingsResult<Self>
     ```
 
     It creates a new instance using a combination of environment variables and parameters. More in detail, every field value can be passed as parameter wrapped in an `Option` object. Then if the parameter is `Some`, it is used, otherwise the value is recoved from the environment variables. If something fails, it returns an `env_settings_utils::EnvSettingsError` error
