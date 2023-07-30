@@ -21,4 +21,3 @@ env-settings = { path = "./../env-settings", version = "*" }
 env-settings-derive = { path = "./../env-settings-derive", version = "*" }
 env-settings-utils = { path = "./../env-settings-utils", version = "*" }
 rstest = "0.18"
-syn = { version = "2.0", features = ["extra-traits"] }
