@@ -21,7 +21,7 @@ proc-macro = true
 env-settings-utils = { path = "./../env-settings-utils", version = "0.1" }
 proc-macro2 = "1.0"
 quote = "1.0"
-syn = "1.0"
+syn = "2.0"
 
 [dev-dependencies]
-syn = { version = "1.0", features = ["extra-traits"] }
+syn = { version = "2.0", features = ["extra-traits"] }
