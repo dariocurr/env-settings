@@ -11,6 +11,7 @@ use proc_macro::TokenStream;
 use quote::quote;
 use std::collections::HashMap;
 use syn::parse;
+use utils::EnvSettingsField;
 
 mod utils;
 
@@ -51,61 +52,78 @@ fn implement(input: &utils::EnvSettingsInput) -> TokenStream {
         env_settings_utils::get_env_variables(case_insensitive)
     };
 
-    for (field_name, field_type) in &input.fields {
-        let mut env_variable = format!("{}{}", input.params.prefix, field_name);
+    for EnvSettingsField {
+        name,
+        type_,
+        default,
+    } in &input.fields
+    {
+        let prefix = input.params.prefix.clone().unwrap_or(String::default());
+        let mut env_variable = format!("{}{}", prefix, name);
         if case_insensitive {
             env_variable = env_variable.to_lowercase();
         }
-        let field_name_string = field_name.to_string();
-        let field_type_string = field_type.to_string();
-        let env_value = if input.params.delay {
+        let name_string = name.to_string();
+        let type_string = type_.to_string();
+        let default_impl = match default {
+            Some(default_value) => quote! {
+                match #default_value.parse::<#type_>() {
+                    Ok(default_value) => default_value,
+                    Err(_) => return Err(env_settings_utils::EnvSettingsError::Convert(
+                        #name_string,
+                        #default_value.to_owned(),
+                        #type_string,
+                    ))
+                }
+            },
+            None => {
+                quote! {
+                   return Err(env_settings_utils::EnvSettingsError::NotExists(#env_variable))
+                }
+            }
+        };
+        let env_value_impl = if input.params.delay {
             quote! {
                 match env_variables.get(#env_variable) {
-                    Some(env_value) => match env_value.parse::<#field_type>() {
+                    Some(env_value) => match env_value.parse::<#type_>() {
                         Ok(env_value) => env_value,
                         Err(_) => return Err(env_settings_utils::EnvSettingsError::Convert(
-                            #field_name_string,
+                            #name_string,
                             env_value.to_owned(),
-                            #field_type_string,
+                            #type_string,
                         )),
                     },
-                    None => return Err(
-                        env_settings_utils::EnvSettingsError::NotExists(#env_variable)
-                    ),
+                    None => #default_impl,
                 }
             }
         } else {
             match env_variables.get(&env_variable) {
                 Some(env_value) => {
                     quote! {
-                        match #env_value.parse::<#field_type>() {
+                        match #env_value.parse::<#type_>() {
                             Ok(env_value) => env_value,
                             Err(_) => return Err(env_settings_utils::EnvSettingsError::Convert(
-                                #field_name_string,
-                                env_value.to_owned(),
-                                #field_type_string,
+                                #name_string,
+                                #env_value.to_owned(),
+                                #type_string,
                             ))
                         }
                     }
                 }
-                None => {
-                    quote! {
-                       return Err(env_settings_utils::EnvSettingsError::NotExists(#env_variable))
-                    }
-                }
+                None => quote! { #default_impl },
             }
         };
         from_env_impls.push(quote! {
-            #field_name: #env_value
+            #name: #env_value_impl
         });
         new_impls.push(quote! {
-            #field_name: match #field_name {
+            #name: match #name {
                 Some(field_value) => field_value,
-                None => #env_value
+                None => #env_value_impl
             }
         });
         new_args.push(quote!(
-            #field_name: Option<#field_type>
+            #name: Option<#type_>
         ));
     }
     let gen = quote! {
