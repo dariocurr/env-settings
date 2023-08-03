@@ -36,7 +36,7 @@ impl EnvSettingsInput {
     fn parse_attributes(attributes: &[Attribute]) -> Result<EnvSettingsParams> {
         let mut params = HashMap::new();
         for attribute in attributes {
-            if attribute.path.is_ident("env_settings") {
+            if attribute.meta.path().is_ident("env_settings") {
                 for token in attribute.tokens.clone() {
                     if let TokenTree::Group(group) = token {
                         let mut attributes_iterator = group.stream().into_iter();
@@ -135,7 +135,7 @@ impl EnvSettingsInput {
                     ))
                 }
             }
-            Data::Enum(_enum) => Err(Error::new(_enum.brace_token.span, "enum not supported")),
+            Data::Enum(_enum) => Err(Error::new(_enum.enum_token.span, "enum not supported")),
             Data::Union(_union) => Err(Error::new(_union.union_token.span, "union not supported")),
         }
     }
