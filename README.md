@@ -101,7 +101,7 @@ The current supported parameters are:
 
 ## Contribute
 
-Before starting to work on a conribution please read:
+Before starting to work on a contribution please read:
 
 -   [Code of Conduct](https://github.com/dariocurr/.github/blob/main/.github/CODE_OF_CONDUCT.md)
 -   [Contributing](https://github.com/dariocurr/.github/blob/main/.github/CONTRIBUTING.md)
