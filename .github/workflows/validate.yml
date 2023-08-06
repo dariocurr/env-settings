@@ -1,0 +1,123 @@
+name: Validate
+
+on:
+  push:
+    branches:
+      - develop
+      - "hotfix*"
+
+  pull_request:
+    branches:
+      - develop
+      - "hotfix*"
+    types:
+      - edited
+      - opened
+      - ready_for_review
+      - reopened
+      - synchronize
+
+  workflow_call:
+
+  workflow_dispatch:
+
+jobs:
+  audit:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v3.5.3
+
+      - name: Cache Rust
+        uses: actions/cache@v3.3.1
+        with:
+          path: |
+            ~/.cargo
+            ./target/.rustc_info.json
+            ./target/CACHEDIR.TAG
+            ./target/debug
+            ./target/doc
+          key: ${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
+            ${{ runner.os }}
+
+      - name: Install cargo-audit
+        run: cargo install cargo-audit --locked
+
+      - name: Check audit
+        run: cargo audit --deny warnings
+
+  docs-lint-deps:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v3.5.3
+
+      - name: Cache Rust
+        uses: actions/cache@v3.3.1
+        with:
+          path: |
+            ~/.cargo
+            ./target/.rustc_info.json
+            ./target/CACHEDIR.TAG
+            ./target/debug
+            ./target/doc
+          key: ${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
+            ${{ runner.os }}
+
+      - name: Check docs
+        run: cargo doc
+
+      - name: Check linting
+        run: cargo clippy -- --deny warnings
+
+      - name: Install cargo utils
+        run: |
+          cargo install cargo-udeps --locked
+          rustup toolchain install nightly
+
+      - name: Check dependencies
+        run: cargo +nightly udeps
+
+  format:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3.5.3
+
+      - name: Check formatting
+        run: cargo fmt --check
+
+  test:
+    if: github.event.pull_request.draft == false
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-latest]
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v3.5.3
+
+      - name: Cache Rust
+        uses: actions/cache@v3.3.1
+        with:
+          path: |
+            ~/.cargo
+            ./target/.rustc_info.json
+            ./target/CACHEDIR.TAG
+            ./target/debug
+            ./target/doc
+          key: ${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
+            ${{ runner.os }}
+
+      - name: Run tests
+        run: cargo test -- --test-threads=1
