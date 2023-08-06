@@ -68,8 +68,6 @@
 //! ```rust
 //! use std::io::prelude::Write;
 //!
-//! // `export MY_STRUCT_NAME=paolo` in shell or
-//! std::env::set_var("MY_STRUCT_NAME", "paolo");
 //! // `echo "MY_STRUCT_AGE=42\n" > .env` in shell or
 //! let mut env_file = std::fs::File::create(".env").unwrap();
 //! env_file.write_all("MY_STRUCT_AGE=42\n".as_bytes()).unwrap();
@@ -81,6 +79,7 @@
 //! #[derive(EnvSettings)]
 //! #[env_settings(case_insensitive, delay, file_path = ".env", prefix="MY_STRUCT_")]
 //! struct MyStruct {
+//!     #[env_settings(default = "paolo")]
 //!     name: String,
 //!     age: u8,
 //! }
@@ -97,18 +96,27 @@
 //!
 //! ### Parameters
 //!
-//! The current supported parameters are:
+//! #### Struct
 //!
-//! -   `case_insensitive`: add it if the environment variables matching should be case insensitive
-//! -   `delay`: add it to delay the lookup for environment variables from compilation time to run time
-//! -   `file_path`: add it to specify a file path to read to add some environment variables (e.g. `.env`)
-//! -   `prefix`: add it to specify a prefix to add to the name of the struct fields before matching the environment variables
+//! The current supported parameters for the structs are:
+//!
+//! -   `case_insensitive`: whether the environment variables matching should be case insensitive
+//! -   `delay`: whether to delay the lookup for environment variables from compilation time to run time
+//! -   `file_path`: the file path to read to add some environment variables (e.g. `.env`)
+//! -   `prefix`: the prefix to add to the name of the struct fields before matching the environment variables
+//!
+//! #### Field
+//!
+//! The current supported parameters for the fields are:
+//!
+//! -   `default`: the default value to use if the environment variable is not found
 //!
 //! ### Variables resolution hierarchy
 //!
 //! 1. Arguments passed to the `new` method (if using `new`).
 //! 2. Environment variables
 //! 3. Variables loaded from a file (e.g. `.env`)
-
+//! 4. Default values
+//!
 /// The trait to add to the derive
 pub trait EnvSettings {}

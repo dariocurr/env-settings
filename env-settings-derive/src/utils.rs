@@ -4,9 +4,22 @@ use syn::{
     parse, Attribute, Data, DeriveInput, Error, Fields, Ident, Meta, MetaList, Result, Type,
 };
 
-/// The parameters of `EnvSettings` derive
+/// The field info needed to the `EnvSettings` derive
+#[derive(Debug)]
+pub(crate) struct EnvSettingsField {
+    /// The name of the field
+    pub(crate) name: Ident,
+
+    /// The type of the field
+    pub(crate) type_: Ident,
+
+    /// The default value of the field
+    pub(crate) default: Option<String>,
+}
+
+/// The outer parameters of `EnvSettings` derive
 #[derive(Debug, Default)]
-pub(crate) struct EnvSettingsParams {
+pub(crate) struct EnvSettingsOuterParams {
     /// Whether the environment variables matching should be case insensitive
     pub(crate) case_insensitive: bool,
 
@@ -17,25 +30,32 @@ pub(crate) struct EnvSettingsParams {
     pub(crate) file_path: Option<String>,
 
     /// The prefix to add the name of the struct fields to match the environment variables
-    pub(crate) prefix: String,
+    pub(crate) prefix: Option<String>,
+}
+
+/// The inner parameters of `EnvSettings` derive
+#[derive(Debug, Default)]
+pub(crate) struct EnvSettingsInnerParams {
+    /// The default value to use if the environment variable is not set
+    pub(crate) default: Option<String>,
 }
 
 /// The `EnvSettings` macro input
 #[derive(Debug)]
 pub(crate) struct EnvSettingsInput {
     /// The parameters of `EnvSettings` derive
-    pub(crate) params: EnvSettingsParams,
+    pub(crate) params: EnvSettingsOuterParams,
 
     /// The identifier of the struct
     pub(crate) name: Ident,
 
-    /// The fields of the struct: name and type
-    pub(crate) fields: Vec<(Ident, Ident)>,
+    /// The fields of the struct
+    pub(crate) fields: Vec<EnvSettingsField>,
 }
 
 impl EnvSettingsInput {
     /// Parse the attributes of the input
-    fn parse_attributes(attributes: &[Attribute]) -> Result<EnvSettingsParams> {
+    fn parse_attributes(attributes: &[Attribute]) -> Result<HashMap<String, Option<String>>> {
         let mut params = HashMap::new();
         for attribute in attributes {
             if attribute.meta.path().is_ident("env_settings") {
@@ -88,36 +108,53 @@ impl EnvSettingsInput {
                 }
             }
         }
-        let mut env_settings_params = EnvSettingsParams::default();
+        Ok(params)
+    }
+
+    fn parse_inner_attributes(attributes: &[Attribute]) -> Result<EnvSettingsInnerParams> {
+        let params = Self::parse_attributes(attributes)?;
+        let mut env_settings_inner_params = EnvSettingsInnerParams::default();
+        if let Some(default) = params.get("default") {
+            env_settings_inner_params.default = default.to_owned();
+        }
+        Ok(env_settings_inner_params)
+    }
+
+    fn parse_outer_attributes(attributes: &[Attribute]) -> Result<EnvSettingsOuterParams> {
+        let params = Self::parse_attributes(attributes)?;
+        let mut env_settings_outer_params = EnvSettingsOuterParams::default();
         if params.contains_key("case_insensitive") {
-            env_settings_params.case_insensitive = true;
+            env_settings_outer_params.case_insensitive = true;
         }
         if params.contains_key("delay") {
-            env_settings_params.delay = true;
+            env_settings_outer_params.delay = true;
         }
         if let Some(file_path) = params.get("file_path") {
-            env_settings_params.file_path = file_path.to_owned();
+            env_settings_outer_params.file_path = file_path.to_owned();
         }
-        if let Some(Some(prefix)) = params.get("prefix") {
-            env_settings_params.prefix = prefix.to_owned();
+        if let Some(prefix) = params.get("prefix") {
+            env_settings_outer_params.prefix = prefix.to_owned();
         };
-        Ok(env_settings_params)
+        Ok(env_settings_outer_params)
     }
 
     /// Parse the data of the input
-    fn parse_data(data: &Data) -> Result<Vec<(Ident, Ident)>> {
+    fn parse_data(data: &Data) -> Result<Vec<EnvSettingsField>> {
         match data {
             Data::Struct(_struct) => {
                 if let Fields::Named(names_fields) = &_struct.fields {
                     let mut fields = Vec::new();
                     for field in &names_fields.named {
+                        let params = Self::parse_inner_attributes(&field.attrs)?;
                         if let (Some(field_name), Type::Path(field_type)) =
                             (&field.ident, &field.ty)
                         {
-                            fields.push((
-                                field_name.to_owned(),
-                                field_type.path.segments[0].ident.to_owned(),
-                            ));
+                            let field = EnvSettingsField {
+                                name: field_name.to_owned(),
+                                type_: field_type.path.segments[0].ident.to_owned(),
+                                default: params.default,
+                            };
+                            fields.push(field);
                         }
                     }
                     Ok(fields)
@@ -138,7 +175,7 @@ impl EnvSettingsInput {
 impl parse::Parse for EnvSettingsInput {
     fn parse(input: parse::ParseStream) -> Result<Self> {
         let ast = DeriveInput::parse(input)?;
-        let params = EnvSettingsInput::parse_attributes(&ast.attrs)?;
+        let params = EnvSettingsInput::parse_outer_attributes(&ast.attrs)?;
         let name = ast.ident;
         let fields = EnvSettingsInput::parse_data(&ast.data)?;
         let env_settings_input = EnvSettingsInput {

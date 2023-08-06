@@ -14,7 +14,7 @@ categories = [
 	"os",
 	"parsing",
 ]
-description = "Initialize Rust structs using environment variables"
+description = "Initialize Rust structs using environment variables (like `pydantic.BaseSettings`)"
 documentation = "http://docs.rs/env-settings/"
 edition = "2021"
 homepage = "https://github.com/dariocurr/env-settings"
@@ -28,4 +28,4 @@ keywords = [
 license = "MIT OR Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/dariocurr/env-settings"
-version = "0.1.1"
+version = "0.1.2"

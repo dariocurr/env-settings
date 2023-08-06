@@ -17,6 +17,7 @@ version.workspace = true
 [dependencies]
 
 [dev-dependencies]
+dotenvy = "0.15"
 env-settings = { path = "./../env-settings", version = "*" }
 env-settings-derive = { path = "./../env-settings-derive", version = "*" }
 env-settings-utils = { path = "./../env-settings-utils", version = "*" }
