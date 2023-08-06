@@ -51,6 +51,44 @@ jobs:
       - name: Release Rust library
         run: cargo release
 
+  publish-coverage:
+    needs: release
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3.5.3
+
+      - name: Cache Rust
+        uses: actions/cache@v3.3.1
+        with:
+          path: |
+            ~/.cargo
+            ./target/.rustc_info.json
+            ./target/CACHEDIR.TAG
+            ./target/debug
+            ./target/doc
+          key: ${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
+            ${{ runner.os }}
+
+      - name: Install cargo-tarpaulin
+        run: cargo install cargo-tarpaulin
+
+      - name: Generate coverage
+        run: |
+          cargo tarpaulin --out html -- --test-threads=1
+          mv tarpaulin-report.html index.html
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v2.0.0
+        with:
+          path: index.html
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2.0.3
+
   github-release:
     needs: release
     runs-on: ubuntu-latest
@@ -75,8 +113,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.5.3
-        with:
-          ref: ${{ github.base_ref }}
 
       - name: Cache Rust
         uses: actions/cache@v3.3.1
