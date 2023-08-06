@@ -1,0 +1,121 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      level:
+        description: Bump the version by the level selected
+        default: patch
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
+          - release
+          - rc
+          - beta
+          - alpha
+        required: true
+
+jobs:
+  validate:
+    uses: ./.github/workflows/validate.yml
+
+  release:
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3.5.3
+
+      - name: Cache Rust
+        uses: actions/cache@v3.3.1
+        with:
+          path: |
+            ~/.cargo
+            ./target/.rustc_info.json
+            ./target/CACHEDIR.TAG
+            ./target/debug
+            ./target/doc
+          key: ${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
+            ${{ runner.os }}
+
+      - name: Install cargo-release
+        run: cargo install cargo-release
+
+      - name: Update version
+        run: cargo release version ${{ inputs.level }}
+
+      - name: Release Rust library
+        run: cargo release
+
+  github-release:
+    needs: release
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3.5.3
+        with:
+          fetch-depth: 0
+          ref: ${{ github.base_ref }}
+
+      - name: Recover tag
+        id: tag
+        run: echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
+
+      - name: Create Github release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.tag.outputs.tag }}
+
+  push-licenses:
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.5.3
+        with:
+          ref: ${{ github.base_ref }}
+
+      - name: Cache Rust
+        uses: actions/cache@v3.3.1
+        with:
+          path: |
+            ~/.cargo
+            ./target/.rustc_info.json
+            ./target/CACHEDIR.TAG
+            ./target/debug
+            ./target/doc
+          key: ${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
+            ${{ runner.os }}
+
+      - name: Install cargo-license
+        run: cargo install cargo-license --locked
+
+      - name: Generate licenses JSON
+        run: cargo license --json > third_party_licenses.json
+
+      - name: Push licenses JSON
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@users.noreply.github.com
+          git add .
+          git commit -m "Add licenses JSON for new release"
+          git push origin
+
+  merge-branches:
+    needs: push-licenses
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.5.3
+
+      - name: Merge ${{ github.base_ref }} -> develop
+        uses: devmasx/merge-branch@v1.4.0
+        with:
+          from_branch: ${{ github.base_ref }}
+          target_branch: develop
+          github_token: ${{ github.token }}
+          type: now
