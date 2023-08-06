@@ -50,6 +50,7 @@
 //! #[env_settings(delay)]
 //! struct MyStruct {
 //!     name: String,
+//!
 //!     age: u8,
 //! }
 //!
@@ -71,6 +72,8 @@
 //! // `echo "MY_STRUCT_AGE=42\n" > .env` in shell or
 //! let mut env_file = std::fs::File::create(".env").unwrap();
 //! env_file.write_all("MY_STRUCT_AGE=42\n".as_bytes()).unwrap();
+//! // `export MY_BIRTH_DATE=01/01/1970` in shell or
+//! std::env::set_var("MY_BIRTH_DATE", "01/01/1970");
 //!
 //!
 //! use env_settings_derive::EnvSettings;
@@ -81,17 +84,23 @@
 //! struct MyStruct {
 //!     #[env_settings(default = "paolo")]
 //!     name: String,
+//!
 //!     age: u8,
+//!
+//!     #[env_settings(variable = "MY_BIRTH_DATE")]
+//!     birth_date: String,
 //! }
 //!
 //! let my_struct = MyStruct::from_env().unwrap();
 //! assert_eq!(my_struct.name, "paolo".to_string());
 //! assert_eq!(my_struct.age, 42);
+//! assert_eq!(my_struct.birth_date, "01/01/1970");
 //!
 //! let name = "luca";
-//! let my_struct = MyStruct::new(Some(name.to_string()), None).unwrap();
+//! let my_struct = MyStruct::new(Some(name.to_string()), None, None).unwrap();
 //! assert_eq!(my_struct.name, name);
 //! assert_eq!(my_struct.age, 42);
+//! assert_eq!(my_struct.birth_date, "01/01/1970");
 //! ```
 //!
 //! ### Parameters
@@ -100,16 +109,17 @@
 //!
 //! The current supported parameters for the structs are:
 //!
-//! -   `case_insensitive`: whether the environment variables matching should be case insensitive
-//! -   `delay`: whether to delay the lookup for environment variables from compilation time to run time
-//! -   `file_path`: the file path to read to add some environment variables (e.g. `.env`)
-//! -   `prefix`: the prefix to add to the name of the struct fields before matching the environment variables
+//! -   `case_insensitive`: whether the environment variables matching should be case insensitive. By default, matching is case sensitive.
+//! -   `delay`: whether to delay the lookup for environment variables from compilation time to run time. By default the lookup is performed at compilation time
+//! -   `file_path`: the file path to read to add some environment variables (e.g. `.env`). By default, it is not set
+//! -   `prefix`: the prefix to add to the name of the struct fields before matching the environment variables. By default, it is not set
 //!
 //! #### Field
 //!
 //! The current supported parameters for the fields are:
 //!
-//! -   `default`: the default value to use if the environment variable is not found
+//! -   `default`: the default value to use if the environment variable is not found. By default, it is not set
+//! -   `variable`: the environment variable to use for the lookup. By default, the name of the field
 //!
 //! ### Variables resolution hierarchy
 //!

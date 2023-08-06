@@ -51,15 +51,15 @@ fn implement(input: &utils::EnvSettingsInput) -> TokenStream {
     } else {
         env_settings_utils::get_env_variables(case_insensitive)
     };
-
+    let prefix = input.params.prefix.clone().unwrap_or(String::default());
     for EnvSettingsField {
         name,
         type_,
         default,
+        variable,
     } in &input.fields
     {
-        let prefix = input.params.prefix.clone().unwrap_or(String::default());
-        let mut env_variable = format!("{}{}", prefix, name);
+        let mut env_variable = variable.to_owned().unwrap_or(format!("{}{}", prefix, name));
         if case_insensitive {
             env_variable = env_variable.to_lowercase();
         }

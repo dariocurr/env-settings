@@ -13,6 +13,7 @@ mod default;
 mod e2e;
 mod file_path;
 mod prefix;
+mod variable;
 
 #[cfg(test)]
 mod tests {

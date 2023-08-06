@@ -15,6 +15,9 @@ pub(crate) struct EnvSettingsField {
 
     /// The default value of the field
     pub(crate) default: Option<String>,
+
+    /// The environment variable name
+    pub(crate) variable: Option<String>,
 }
 
 /// The outer parameters of `EnvSettings` derive
@@ -38,6 +41,9 @@ pub(crate) struct EnvSettingsOuterParams {
 pub(crate) struct EnvSettingsInnerParams {
     /// The default value to use if the environment variable is not set
     pub(crate) default: Option<String>,
+
+    /// The environment variable name
+    pub(crate) variable: Option<String>,
 }
 
 /// The `EnvSettings` macro input
@@ -117,6 +123,9 @@ impl EnvSettingsInput {
         if let Some(default) = params.get("default") {
             env_settings_inner_params.default = default.to_owned();
         }
+        if let Some(variable) = params.get("variable") {
+            env_settings_inner_params.variable = variable.to_owned();
+        }
         Ok(env_settings_inner_params)
     }
 
@@ -153,6 +162,7 @@ impl EnvSettingsInput {
                                 name: field_name.to_owned(),
                                 type_: field_type.path.segments[0].ident.to_owned(),
                                 default: params.default,
+                                variable: params.variable,
                             };
                             fields.push(field);
                         }

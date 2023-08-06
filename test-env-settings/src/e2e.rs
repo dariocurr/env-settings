@@ -15,7 +15,7 @@ mod tests {
     struct TestEnvSettings {
         name: String,
 
-        #[env_settings(default = 24)]
+        #[env_settings(default = 24, variable = "TEST_24_AGE")]
         age: u8,
     }
 
@@ -34,37 +34,37 @@ mod tests {
     )]
     #[case(
 		FILE_PATH,
-        HashMap::from([("TEST_age", "42")]),
+        HashMap::from([("test_24_age", "42")]),
         HashMap::from([]),
         Err(EnvSettingsError::NotExists("test_name"))
     )]
     #[case(
 		FILE_PATH,
-        HashMap::from([("TEST_name", "lorem"), ("TEST_age", "42")]),
+        HashMap::from([("TEST_name", "lorem"), ("test_24_age", "42")]),
         HashMap::from([]),
         Ok(TestEnvSettings { name: "lorem".to_string(), age: 42 })
     )]
     #[case(
 		FILE_PATH,
-        HashMap::from([("TEST_age", "42")]),
+        HashMap::from([("test_24_age", "42")]),
         HashMap::from([("TEST_name", "lorem")]),
         Ok(TestEnvSettings { name: "lorem".to_string(), age: 42 })
     )]
     #[case(
 		FILE_PATH,
-        HashMap::from([("TEST_age", "42")]),
-        HashMap::from([("TEST_name", "lorem"), ("TEST_age", "24")]),
+        HashMap::from([("test_24_age", "42")]),
+        HashMap::from([("TEST_name", "lorem"), ("test_24_age", "24")]),
         Ok(TestEnvSettings { name: "lorem".to_string(), age: 42 })
     )]
     #[case(
 		FILE_PATH,
-        HashMap::from([("TEST_name", "lorem"), ("TEST_age", "42")]),
+        HashMap::from([("TEST_name", "lorem"), ("test_24_age", "42")]),
         HashMap::from([("TEST_name", "other")]),
         Ok(TestEnvSettings { name: "lorem".to_string(), age: 42 })
     )]
     #[case(
 		FILE_PATH,
-        HashMap::from([("TEST_name", "lorem"), ("TEST_age", "other")]),
+        HashMap::from([("TEST_name", "lorem"), ("test_24_age", "other")]),
         HashMap::from([]),
         Err(EnvSettingsError::Convert("age", "other".to_string(), "u8"))
     )]
@@ -94,7 +94,7 @@ mod tests {
     #[case(
 		FILE_PATH,
         HashMap::from([("TEST_name", "lorem")]),
-        HashMap::from([("TEST_age", "42")]),
+        HashMap::from([("test_24_age", "42")]),
         None,
         None,
         Ok(TestEnvSettings { name: "lorem".to_string(), age: 42 })
@@ -125,7 +125,7 @@ mod tests {
     )]
     #[case(
 		FILE_PATH,
-        HashMap::from([("TEST_age", "42")]),
+        HashMap::from([("test_24_age", "42")]),
         HashMap::from([]),
         Some("lorem".to_string()),
         None,
@@ -141,7 +141,7 @@ mod tests {
     )]
     #[case(
 		FILE_PATH,
-        HashMap::from([("TEST_name", "other"), ("TEST_age", "24")]),
+        HashMap::from([("TEST_name", "other"), ("test_24_age", "24")]),
         HashMap::from([]),
         Some("lorem".to_string()),
         Some(42),
