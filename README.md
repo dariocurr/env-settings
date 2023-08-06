@@ -40,6 +40,7 @@ use env_settings_derive::EnvSettings;
 #[derive(EnvSettings)]
 struct MyStruct {
     name: String,
+
     age: u8,
 }
 
@@ -58,29 +59,36 @@ fn main() {
 ### Advanced
 
 ```sh
-echo "STRUCT_AGE=42\n" > .env
+echo "MY_STRUCT_AGE=42\n" > .env
+export MY_BIRTH_DATE=01/01/1970
 ```
 
 ```rs
 use env_settings_derive::EnvSettings;
 
 #[derive(EnvSettings)]
-#[env_settings(case_insensitive, file_path = ".env", prefix="STRUCT_")]
+#[env_settings(case_insensitive, file_path = ".env", prefix="MY_STRUCT_")]
 struct MyStruct {
     #[env_settings(default = "paolo")]
     name: String,
+
     age: u8,
+
+    #[env_settings(variable = "MY_BIRTH_DATE")]
+    birth_date: String,
 }
 
 fn main() {
     let my_struct = MyStruct::from_env().unwrap();
     assert_eq!(my_struct.name, "paolo".to_string());
     assert_eq!(my_struct.age, 42);
+    assert_eq!(my_struct.birth_date, "01/01/1970");
 
     let name = "luca";
-    let my_struct = MyStruct::new(Some(name.to_string()), None).unwrap();
+    let my_struct = MyStruct::new(Some(name.to_string()), None,  None).unwrap();
     assert_eq!(my_struct.name, name);
     assert_eq!(my_struct.age, 42);
+    assert_eq!(my_struct.birth_date, "01/01/1970");
 }
 ```
 
@@ -90,16 +98,17 @@ fn main() {
 
 The current supported parameters for the structs are:
 
--   `case_insensitive`: whether the environment variables matching should be case insensitive
--   `delay`: whether to delay the lookup for environment variables from compilation time to run time
--   `file_path`: the file path to read to add some environment variables (e.g. `.env`)
--   `prefix`: the prefix to add to the name of the struct fields before matching the environment variables
+-   `case_insensitive`: whether the environment variables matching should be case insensitive. By default, matching is case sensitive.
+-   `delay`: whether to delay the lookup for environment variables from compilation time to run time. By default the lookup is performed at compilation time
+-   `file_path`: the file path to read to add some environment variables (e.g. `.env`). By default, it is not set
+-   `prefix`: the prefix to add to the name of the struct fields before matching the environment variables. By default, it is not set
 
 #### Field
 
 The current supported parameters for the fields are:
 
--   `default`: the default value to use if the environment variable is not found
+-   `default`: the default value to use if the environment variable is not found. By default, it is not set
+-   `variable`: the environment variable to use for the lookup. By default, the name of the field
 
 ### Variables resolution hierarchy
 
