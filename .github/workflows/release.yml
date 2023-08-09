@@ -114,7 +114,7 @@ jobs:
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2.0.3
+        uses: actions/deploy-pages@v2.0.4
 
   push-licenses:
     needs: release
