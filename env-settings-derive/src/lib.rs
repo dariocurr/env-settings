@@ -28,11 +28,14 @@ pub fn env_settings_derive(input: TokenStream) -> TokenStream {
 /// Implement the logic of the derive macro
 fn implement(input: &utils::EnvSettingsInput) -> TokenStream {
     let struct_name = &input.name;
+
     let mut new_args = Vec::new();
     let mut new_impls = Vec::new();
     let mut from_env_impls = Vec::new();
+
     let mut env_variables_impls = quote! {};
     let mut file_path_impls = quote! {};
+
     if let Some(file_path) = &input.params.file_path {
         if input.params.delay {
             file_path_impls = quote! {
@@ -42,7 +45,9 @@ fn implement(input: &utils::EnvSettingsInput) -> TokenStream {
             env_settings_utils::load_env_file_path(file_path).unwrap();
         }
     }
+
     let case_insensitive = input.params.case_insensitive;
+
     let env_variables = if input.params.delay {
         env_variables_impls = quote! {
             let env_variables = env_settings_utils::get_env_variables(#case_insensitive);
@@ -51,13 +56,15 @@ fn implement(input: &utils::EnvSettingsInput) -> TokenStream {
     } else {
         env_settings_utils::get_env_variables(case_insensitive)
     };
+
     let prefix = input.params.prefix.clone().unwrap_or(String::default());
+
     for EnvSettingsField {
         name,
         type_,
         default,
+        is_optional,
         variable,
-        ..
     } in &input.fields
     {
         let mut env_variable = variable.to_owned().unwrap_or(format!("{}{}", prefix, name));
@@ -70,73 +77,94 @@ fn implement(input: &utils::EnvSettingsInput) -> TokenStream {
             .map(|segment| segment.ident.to_string())
             .collect::<Vec<String>>()
             .join("::");
+
+        // the variable involded must be named `value`
+        let optional_value_impl = if *is_optional {
+            quote! { Some(value) }
+        } else {
+            quote! { value }
+        };
+
+        // the variable involded must be named `value_to_parse`
+        let convert_err_impl = quote! {
+            return Err(env_settings_utils::EnvSettingsError::Convert(
+                #name_string,
+                value_to_parse.to_owned(),
+                #type_string,
+            ))
+        };
+
         let default_impl = match default {
-            Some(default_value) => quote! {
-                match #default_value.parse::<#type_>() {
-                    Ok(default_value) => default_value,
-                    Err(_) => return Err(env_settings_utils::EnvSettingsError::Convert(
-                        #name_string,
-                        #default_value.to_owned(),
-                        #type_string,
-                    ))
+            Some(value_to_parse) => {
+                quote! {
+                    match #value_to_parse.parse::<#type_>() {
+                        Ok(value) => #optional_value_impl,
+                        Err(_) => {
+                            let value_to_parse = #value_to_parse.to_owned();
+                            #convert_err_impl
+                        }
+                    }
                 }
-            },
+            }
             None => {
-                quote! { return Err(env_settings_utils::EnvSettingsError::NotExists(#env_variable)) }
+                if *is_optional {
+                    quote! { None }
+                } else {
+                    quote! { return Err(env_settings_utils::EnvSettingsError::NotExists(#env_variable)) }
+                }
             }
         };
+
+        // the variable involded must be named `value_to_parse`
+        let parse_impl = quote! {
+            match value_to_parse.parse::<#type_>() {
+                Ok(value) => #optional_value_impl,
+                Err(_) => #convert_err_impl
+            }
+        };
+
+        // the variable involded must be named `env_variables`
         let env_value_impl = if input.params.delay {
             quote! {
                 match env_variables.get(#env_variable) {
-                    Some(env_value) => match env_value.parse::<#type_>() {
-                        Ok(env_value) => env_value,
-                        Err(_) => return Err(env_settings_utils::EnvSettingsError::Convert(
-                            #name_string,
-                            env_value.to_owned(),
-                            #type_string,
-                        )),
-                    },
+                    Some(value_to_parse) => #parse_impl,
                     None => #default_impl,
                 }
             }
         } else {
             match env_variables.get(&env_variable) {
-                Some(env_value) => {
-                    quote! {
-                        match #env_value.parse::<#type_>() {
-                            Ok(env_value) => env_value,
-                            Err(_) => return Err(env_settings_utils::EnvSettingsError::Convert(
-                                #name_string,
-                                #env_value.to_owned(),
-                                #type_string,
-                            ))
-                        }
+                Some(value_to_parse) => quote! {
+                    {
+                        let value_to_parse = #value_to_parse.to_owned();
+                        #parse_impl
                     }
-                }
+                },
+
                 None => quote! { #default_impl },
             }
         };
-        from_env_impls.push(quote! {
-            #name: #env_value_impl
-        });
+
         new_impls.push(quote! {
             #name: match #name {
-                Some(field_value) => field_value,
+                Some(value) => #optional_value_impl,
                 None => #env_value_impl
             }
         });
-        new_args.push(quote! {
-            #name: Option<#type_>
-        });
+        new_args.push(quote! { #name: Option<#type_> });
+        from_env_impls.push(quote! { #name: #env_value_impl });
     }
+
+    let pre_impls = quote! {
+        #file_path_impls
+        #env_variables_impls
+    };
+
     let gen = quote! {
 
         impl #struct_name {
 
             fn new(#(#new_args),*) -> env_settings_utils::EnvSettingsResult<Self> {
-                #file_path_impls
-                #env_variables_impls
-
+                #pre_impls
                 let instance = Self {
                     #(#new_impls),*
                 };
@@ -144,8 +172,7 @@ fn implement(input: &utils::EnvSettingsInput) -> TokenStream {
             }
 
             fn from_env() -> env_settings_utils::EnvSettingsResult<Self> {
-                #file_path_impls
-                #env_variables_impls
+                #pre_impls
                 let instance = Self {
                     #(#from_env_impls),*
                 };
@@ -155,5 +182,6 @@ fn implement(input: &utils::EnvSettingsInput) -> TokenStream {
         }
 
     };
+
     gen.into()
 }
