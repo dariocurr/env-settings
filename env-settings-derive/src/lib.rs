@@ -82,9 +82,7 @@ fn implement(input: &utils::EnvSettingsInput) -> TokenStream {
                 }
             },
             None => {
-                quote! {
-                   return Err(env_settings_utils::EnvSettingsError::NotExists(#env_variable))
-                }
+                quote! { return Err(env_settings_utils::EnvSettingsError::NotExists(#env_variable)) }
             }
         };
         let env_value_impl = if input.params.delay {
@@ -127,9 +125,9 @@ fn implement(input: &utils::EnvSettingsInput) -> TokenStream {
                 None => #env_value_impl
             }
         });
-        new_args.push(quote!(
+        new_args.push(quote! {
             #name: Option<#type_>
-        ));
+        });
     }
     let gen = quote! {
 
