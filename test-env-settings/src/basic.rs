@@ -11,7 +11,7 @@ mod tests {
     #[derive(Debug, EnvSettings, PartialEq)]
     #[env_settings(delay)]
     struct TestEnvSettings {
-        name: String,
+        name: std::string::String,
         age: u8,
     }
 

@@ -2,6 +2,7 @@ use proc_macro2::TokenTree;
 use std::collections::HashMap;
 use syn::{
     parse, Attribute, Data, DeriveInput, Error, Fields, Ident, Meta, MetaList, Result, Type,
+    TypePath,
 };
 
 /// The field info needed to the `EnvSettings` derive
@@ -11,7 +12,7 @@ pub(crate) struct EnvSettingsField {
     pub(crate) name: Ident,
 
     /// The type of the field
-    pub(crate) type_: Ident,
+    pub(crate) type_: TypePath,
 
     /// The default value of the field
     pub(crate) default: Option<String>,
@@ -160,7 +161,7 @@ impl EnvSettingsInput {
                         {
                             let field = EnvSettingsField {
                                 name: field_name.to_owned(),
-                                type_: field_type.path.segments[0].ident.to_owned(),
+                                type_: field_type.to_owned(),
                                 default: params.default,
                                 variable: params.variable,
                             };

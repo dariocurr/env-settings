@@ -64,7 +64,12 @@ fn implement(input: &utils::EnvSettingsInput) -> TokenStream {
             env_variable = env_variable.to_lowercase();
         }
         let name_string = name.to_string();
-        let type_string = type_.to_string();
+        let type_string: String = type_
+            .path
+            .segments
+            .iter()
+            .map(|segment| segment.ident.to_string())
+            .collect();
         let default_impl = match default {
             Some(default_value) => quote! {
                 match #default_value.parse::<#type_>() {
