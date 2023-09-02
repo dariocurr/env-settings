@@ -56,8 +56,8 @@ fn implement(input: &utils::EnvSettingsInput) -> TokenStream {
         name,
         type_,
         default,
-        is_optional,
         variable,
+        ..
     } in &input.fields
     {
         let mut env_variable = variable.to_owned().unwrap_or(format!("{}{}", prefix, name));
@@ -65,14 +65,11 @@ fn implement(input: &utils::EnvSettingsInput) -> TokenStream {
             env_variable = env_variable.to_lowercase();
         }
         let name_string = name.to_string();
-        let mut type_string = type_
+        let type_string = type_
             .iter()
             .map(|segment| segment.ident.to_string())
             .collect::<Vec<String>>()
             .join("::");
-        if *is_optional {
-            type_string = format!("Option<{}>", type_string);
-        }
         let default_impl = match default {
             Some(default_value) => quote! {
                 match #default_value.parse::<#type_>() {
