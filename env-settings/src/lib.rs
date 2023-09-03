@@ -39,8 +39,8 @@
 //! ```rust
 //! // `export name=paolo` in shell or
 //! std::env::set_var("name", "paolo");
-//! // `export age=42` in shell or
-//! std::env::set_var("age", "42");
+//! // `export favourite_number=42` in shell or
+//! std::env::set_var("favourite_number", "42");
 //!
 //!
 //! use env_settings_derive::EnvSettings;
@@ -51,17 +51,17 @@
 //! struct MyStruct {
 //!     name: String,
 //!
-//!     age: u8,
+//!     favourite_number: u8,
 //! }
 //!
 //! let my_struct = MyStruct::from_env().unwrap();
 //! assert_eq!(my_struct.name, "paolo".to_string());
-//! assert_eq!(my_struct.age, 42);
+//! assert_eq!(my_struct.favourite_number, 42);
 //!
 //! let name = "luca";
 //! let my_struct = MyStruct::new(Some(name.to_string()), None).unwrap();
 //! assert_eq!(my_struct.name, name);
-//! assert_eq!(my_struct.age, 42);
+//! assert_eq!(my_struct.favourite_number, 42);
 //! ```
 //!
 //! ### Advanced
@@ -69,9 +69,9 @@
 //! ```rust
 //! use std::io::prelude::Write;
 //!
-//! // `echo "MY_STRUCT_AGE=42\n" > .env` in shell or
+//! // `echo "MY_STRUCT_FAVOURITE_NUMBER=42\n" > .env` in shell or
 //! let mut env_file = std::fs::File::create(".env").unwrap();
-//! env_file.write_all("MY_STRUCT_AGE=42\n".as_bytes()).unwrap();
+//! env_file.write_all("MY_STRUCT_FAVOURITE_NUMBER=42\n".as_bytes()).unwrap();
 //! // `export MY_BIRTH_DATE=01/01/1970` in shell or
 //! std::env::set_var("MY_BIRTH_DATE", "01/01/1970");
 //!
@@ -85,22 +85,31 @@
 //!     #[env_settings(default = "paolo")]
 //!     name: String,
 //!
-//!     age: u8,
+//!     favourite_number: u8,
 //!
 //!     #[env_settings(variable = "MY_BIRTH_DATE")]
 //!     birth_date: String,
+//!
+//!     birth_place: Option<String>
 //! }
 //!
 //! let my_struct = MyStruct::from_env().unwrap();
 //! assert_eq!(my_struct.name, "paolo".to_string());
-//! assert_eq!(my_struct.age, 42);
+//! assert_eq!(my_struct.favourite_number, 42);
 //! assert_eq!(my_struct.birth_date, "01/01/1970");
+//! assert_eq!(my_struct.birth_place, None);
 //!
 //! let name = "luca";
-//! let my_struct = MyStruct::new(Some(name.to_string()), None, None).unwrap();
+//! let my_struct = MyStruct::new(
+//!     Some(name.to_string()),
+//!     None,
+//!     None,
+//!     Some("london".to_string())
+//! ).unwrap();
 //! assert_eq!(my_struct.name, name);
-//! assert_eq!(my_struct.age, 42);
+//! assert_eq!(my_struct.favourite_number, 42);
 //! assert_eq!(my_struct.birth_date, "01/01/1970");
+//! assert_eq!(my_struct.birth_place, Some("london".to_string()));
 //! ```
 //!
 //! ### Parameters
@@ -128,5 +137,6 @@
 //! 3. Variables loaded from a file (e.g. `.env`)
 //! 4. Default values
 //!
+
 /// The trait to add to the derive
 pub trait EnvSettings {}

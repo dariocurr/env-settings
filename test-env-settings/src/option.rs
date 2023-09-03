@@ -11,8 +11,8 @@ mod tests {
     #[derive(Debug, EnvSettings, PartialEq)]
     #[env_settings(delay)]
     struct TestEnvSettings {
-        name: std::string::String,
-        age: u8,
+        name: String,
+        age: Option<u8>,
     }
 
     #[rstest]
@@ -22,7 +22,7 @@ mod tests {
     )]
     #[case(
         HashMap::from([("name", "lorem")]),
-        Err(EnvSettingsError::NotExists("age"))
+        Ok(TestEnvSettings { name: "lorem".to_string(), age: None })
     )]
     #[case(
         HashMap::from([("age", "42")]),
@@ -30,7 +30,7 @@ mod tests {
     )]
     #[case(
         HashMap::from([("name", "lorem"), ("age", "42")]),
-        Ok(TestEnvSettings { name: "lorem".to_string(), age: 42 })
+        Ok(TestEnvSettings { name: "lorem".to_string(), age: Some(42) })
     )]
     #[case(
         HashMap::from([("name", "lorem"), ("age", "other")]),
@@ -54,7 +54,7 @@ mod tests {
         HashMap::from([("name", "lorem"), ("age", "42")]),
         None,
         None,
-        Ok(TestEnvSettings { name: "lorem".to_string(), age: 42 })
+        Ok(TestEnvSettings { name: "lorem".to_string(), age: Some(42) })
     )]
     #[case(
         HashMap::from([]),
@@ -66,31 +66,31 @@ mod tests {
         HashMap::from([("name", "lorem")]),
         None,
         Some(42),
-        Ok(TestEnvSettings { name: "lorem".to_string(), age: 42 })
+        Ok(TestEnvSettings { name: "lorem".to_string(), age: Some(42) })
     )]
     #[case(
         HashMap::from([]),
         Some("lorem".to_string()),
         None,
-        Err(EnvSettingsError::NotExists("age"))
+        Ok(TestEnvSettings { name: "lorem".to_string(), age: None })
     )]
     #[case(
         HashMap::from([("age", "42")]),
         Some("lorem".to_string()),
         None,
-        Ok(TestEnvSettings { name: "lorem".to_string(), age: 42 })
+        Ok(TestEnvSettings { name: "lorem".to_string(), age: Some(42) })
     )]
     #[case(
         HashMap::from([]),
         Some("lorem".to_string()),
         Some(42),
-        Ok(TestEnvSettings { name: "lorem".to_string(), age: 42 })
+        Ok(TestEnvSettings { name: "lorem".to_string(), age: Some(42) })
     )]
     #[case(
         HashMap::from([("name", "other"), ("age", "24")]),
         Some("lorem".to_string()),
         Some(42),
-        Ok(TestEnvSettings { name: "lorem".to_string(), age: 42 })
+        Ok(TestEnvSettings { name: "lorem".to_string(), age: Some(42) })
     )]
     #[case(
         HashMap::from([("name", "lorem"), ("age", "other")]),

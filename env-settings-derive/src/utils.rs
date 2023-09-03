@@ -1,7 +1,10 @@
 use proc_macro2::TokenTree;
 use std::collections::HashMap;
+use syn::parse::{Parse, ParseStream};
+use syn::punctuated::Punctuated;
+use syn::token::PathSep;
 use syn::{
-    parse, Attribute, Data, DeriveInput, Error, Fields, Ident, Meta, MetaList, Result, Type,
+    Attribute, Data, DeriveInput, Error, Fields, Ident, Meta, MetaList, PathSegment, Result, Type,
 };
 
 /// The field info needed to the `EnvSettings` derive
@@ -11,10 +14,13 @@ pub(crate) struct EnvSettingsField {
     pub(crate) name: Ident,
 
     /// The type of the field
-    pub(crate) type_: Ident,
+    pub(crate) type_: Punctuated<PathSegment, PathSep>,
 
     /// The default value of the field
     pub(crate) default: Option<String>,
+
+    /// Whether the field is optional or not
+    pub(crate) is_optional: bool,
 
     /// The environment variable name
     pub(crate) variable: Option<String>,
@@ -158,10 +164,26 @@ impl EnvSettingsInput {
                         if let (Some(field_name), Type::Path(field_type)) =
                             (&field.ident, &field.ty)
                         {
+                            let mut segments = field_type.path.segments.to_owned();
+                            let is_optional = if segments[0].ident == "Option" {
+                                if let syn::PathArguments::AngleBracketed(arguments) =
+                                    &segments[0].arguments
+                                {
+                                    if let syn::GenericArgument::Type(Type::Path(field_type)) =
+                                        &arguments.args[0]
+                                    {
+                                        segments = field_type.path.segments.to_owned()
+                                    }
+                                }
+                                true
+                            } else {
+                                false
+                            };
                             let field = EnvSettingsField {
                                 name: field_name.to_owned(),
-                                type_: field_type.path.segments[0].ident.to_owned(),
+                                type_: segments,
                                 default: params.default,
+                                is_optional,
                                 variable: params.variable,
                             };
                             fields.push(field);
@@ -182,8 +204,8 @@ impl EnvSettingsInput {
 }
 
 /// Implement the parse method for `EnvSettingsInput`
-impl parse::Parse for EnvSettingsInput {
-    fn parse(input: parse::ParseStream) -> Result<Self> {
+impl Parse for EnvSettingsInput {
+    fn parse(input: ParseStream) -> Result<Self> {
         let ast = DeriveInput::parse(input)?;
         let params = EnvSettingsInput::parse_outer_attributes(&ast.attrs)?;
         let name = ast.ident;
