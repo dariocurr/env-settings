@@ -21,7 +21,7 @@ jobs:
           ref: ${{ github.ref_name }}
 
       - name: Cache Rust
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@v3.3.2
         with:
           path: |
             ~/.cargo
@@ -80,7 +80,7 @@ jobs:
       - uses: actions/checkout@v4.0.0
 
       - name: Cache Rust
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@v3.3.2
         with:
           path: |
             ~/.cargo
