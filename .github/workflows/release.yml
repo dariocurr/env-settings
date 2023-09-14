@@ -37,11 +37,6 @@ jobs:
       - name: Install cargo-release
         run: cargo install cargo-release
 
-      - name: Setup git
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions@users.noreply.github.com"
-
       - name: Cargo login
         run: cargo login ${{ secrets.CRATES_API_TOKEN }}
 
