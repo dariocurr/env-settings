@@ -43,6 +43,11 @@ jobs:
       - name: Release Rust library
         run: cargo release --execute --no-confirm --tag-prefix "" --unpublished
 
+      - name: Setup git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions@users.noreply.github.com"
+
       - name: Output tag
         id: tag
         run: echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
