@@ -13,7 +13,7 @@
 //!
 //! ## Installation
 //!
-//! ```sh
+//! ```bash
 //! cargo add env-settings
 //! cargo add env-settings-derive
 //! ```
@@ -22,13 +22,13 @@
 //!
 //! When you add the `EnvSettings` derive to a `struct`, two methods are added to it
 //!
-//! -   ```text
+//! -   ```rust,no_run
 //!     fn from_env() -> env_settings_utils::EnvSettingsResult<Self>
 //!     ```
 //!
 //!     It creates a new instance using just the environment variables. If something fails, it returns an `env_settings_utils::EnvSettingsError` error
 //!
-//! -   ```text
+//! -   ```rust,no_run
 //!     fn new(...) -> env_settings_utils::EnvSettingsResult<Self>
 //!     ```
 //!
