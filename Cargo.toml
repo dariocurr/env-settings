@@ -5,6 +5,7 @@ members = [
 	"env-settings-utils",
 	"test-env-settings",
 ]
+resolver = "2"
 
 [workspace.package]
 authors = ["Dario Curreri <dariocurr@gmail.com>"]

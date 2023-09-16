@@ -77,27 +77,34 @@ struct MyStruct {
     #[env_settings(variable = "MY_BIRTH_DATE")]
     birth_date: String,
 
-    birth_place: Option<String>
+    birth_place: Option<String>,
+
+    #[env_settings(skip)]
+    friends: Vec<String>,
 }
 
 fn main() {
-    let my_struct = MyStruct::from_env().unwrap();
+    let friends = vec!["luca".to_string()];
+    let my_struct = MyStruct::from_env(friends.clone()).unwrap();
     assert_eq!(my_struct.name, "paolo".to_string());
     assert_eq!(my_struct.favourite_number, 42);
     assert_eq!(my_struct.birth_date, "01/01/1970");
     assert_eq!(my_struct.birth_place, None);
+    assert_eq!(my_struct.friends, friends);
 
     let name = "luca";
     let my_struct = MyStruct::new(
         Some(name.to_string()),
         None,
         None,
-        Some("london".to_string())
+        Some("london".to_string()),
+        friends.clone(),
     ).unwrap();
     assert_eq!(my_struct.name, name);
     assert_eq!(my_struct.favourite_number, 42);
     assert_eq!(my_struct.birth_date, "01/01/1970");
     assert_eq!(my_struct.birth_place, Some("london".to_string()));
+    assert_eq!(my_struct.friends, friends);
 }
 ```
 
@@ -117,6 +124,7 @@ The current supported parameters for the structs are:
 The current supported parameters for the fields are:
 
 -   `default`: the default value to use if the environment variable is not found. By default, it is not set
+-   `skip`: whether to skip the parsing of the environment variable
 -   `variable`: the environment variable to use for the lookup. By default, the name of the field
 
 ### Variables resolution hierarchy

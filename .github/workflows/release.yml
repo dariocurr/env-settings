@@ -16,12 +16,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v3.6.0
+      - uses: actions/checkout@v4.0.0
         with:
           ref: ${{ github.ref_name }}
 
       - name: Cache Rust
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@v3.3.2
         with:
           path: |
             ~/.cargo
@@ -36,11 +36,6 @@ jobs:
 
       - name: Install cargo-release
         run: cargo install cargo-release
-
-      - name: Setup git
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions@users.noreply.github.com"
 
       - name: Cargo login
         run: cargo login ${{ secrets.CRATES_API_TOKEN }}
@@ -59,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v3.6.0
+      - uses: actions/checkout@v4.0.0
 
       - name: Create Github release
         uses: softprops/action-gh-release@v1
@@ -77,10 +72,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v3.6.0
+      - uses: actions/checkout@v4.0.0
 
       - name: Cache Rust
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@v3.3.2
         with:
           path: |
             ~/.cargo
@@ -115,7 +110,7 @@ jobs:
     needs: release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.6.0
+      - uses: actions/checkout@v4.0.0
 
       - name: Merge ${{ github.base_ref }} -> develop
         uses: devmasx/merge-branch@v1.4.0
@@ -125,7 +120,7 @@ jobs:
           github_token: ${{ github.token }}
           type: now
 
-      - uses: actions/checkout@v3.6.0
+      - uses: actions/checkout@v4.0.0
         with:
           ref: develop
 
