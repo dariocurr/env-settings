@@ -191,5 +191,6 @@ fn implement(input: &utils::input::EnvSettingsInput) -> TokenStream {
         }
 
     };
+
     gen.into()
 }

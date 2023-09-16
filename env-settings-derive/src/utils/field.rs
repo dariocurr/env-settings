@@ -42,22 +42,21 @@ pub(crate) enum EnvSettingsField {
 
 impl EnvSettingsField {
     fn get_field(type_: &Type, name: &Ident, attrs: &[Attribute]) -> Result<Self> {
-        let impls_from_str = true;
+        let params = EnvSettingsInnerParams::parse_attributes(attrs)?;
         let non_parsable_field = EnvSettingsField::NonParsable {
             name: name.to_owned(),
             type_: type_.to_owned(),
         };
-        let field = if impls_from_str {
+        let field = if params.skip {
+            non_parsable_field
+        } else {
             match &type_ {
                 Type::Path(type_path) => {
-                    Self::get_field_from_type_path(type_, type_path, name, attrs)?
+                    Self::get_field_from_type_path(type_, type_path, name, params)?
                 }
                 _ => non_parsable_field,
             }
-        } else {
-            non_parsable_field
         };
-
         Ok(field)
     }
 
@@ -65,7 +64,7 @@ impl EnvSettingsField {
         type_: &Type,
         type_path: &TypePath,
         name: &Ident,
-        attrs: &[Attribute],
+        params: EnvSettingsInnerParams,
     ) -> Result<Self> {
         let mut segments = type_path.path.segments.to_owned();
         let optional_type = Self::get_optional_type(&segments);
@@ -77,7 +76,7 @@ impl EnvSettingsField {
             .map(|segment| segment.ident.to_string())
             .collect::<Vec<String>>()
             .join("::");
-        let params = EnvSettingsInnerParams::parse_attributes(attrs)?;
+
         let parsable_field = EnvSettingsField::Parsable {
             name: name.to_owned(),
             name_label: name.to_string(),

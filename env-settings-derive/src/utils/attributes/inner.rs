@@ -10,6 +10,9 @@ pub(crate) struct EnvSettingsInnerParams {
 
     /// The environment variable name
     pub(crate) variable: Option<String>,
+
+    /// Whether to skip the parsing
+    pub(crate) skip: bool,
 }
 
 impl EnvSettingsInnerParams {
@@ -21,6 +24,9 @@ impl EnvSettingsInnerParams {
         }
         if let Some(variable) = params.get("variable") {
             env_settings_inner_params.variable = variable.to_owned();
+        }
+        if params.contains_key("skip") {
+            env_settings_inner_params.skip = true;
         }
         Ok(env_settings_inner_params)
     }

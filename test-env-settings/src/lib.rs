@@ -14,6 +14,7 @@ mod e2e;
 mod file_path;
 mod option;
 mod prefix;
+mod skip;
 mod variable;
 
 #[cfg(test)]
