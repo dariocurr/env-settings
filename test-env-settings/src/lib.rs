@@ -12,6 +12,7 @@ mod case_insensitive;
 mod default;
 mod e2e;
 mod file_path;
+mod option;
 mod prefix;
 mod variable;
 
