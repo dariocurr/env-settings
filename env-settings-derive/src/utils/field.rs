@@ -6,7 +6,6 @@ use syn::{
 };
 
 /// The field info needed to the `EnvSettings` derive
-#[derive(Debug)]
 pub(crate) enum EnvSettingsField {
     NonParsable {
         /// The name of the field

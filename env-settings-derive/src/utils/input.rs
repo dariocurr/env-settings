@@ -5,7 +5,6 @@ use std::collections::HashMap;
 use syn::{parse, Attribute, DeriveInput, Error, Ident, Meta, MetaList, Result};
 
 /// The `EnvSettings` macro input
-#[derive(Debug)]
 pub(crate) struct EnvSettingsInput {
     /// The parameters of `EnvSettings` derive
     pub(crate) params: attributes::outer::EnvSettingsOuterParams,
