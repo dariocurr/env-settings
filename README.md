@@ -1,5 +1,12 @@
 # Env Settings
 
+![Env Settings](./docs/logo.svg "Env Settings")
+
+[![crates.io](https://img.shields.io/crates/v/env-settings.svg)](https://crates.io/crates/env-settings)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](./Cargo.toml)
+[![License](https://img.shields.io/badge/license-Apache2.0-blue.svg)](./Cargo.toml)
+[![Validate](https://github.com/dariocurr/env-settings/actions/workflows/validate.yml/badge.svg)](https://github.com/dariocurr/env-settings/actions/workflows/validate.yml)
+
 **Env Settings** is a Rust library that helps you to initialize structs using environment variables
 
 > This Rust library took inspiration from [`pydantic's BaseSettings`](https://docs.pydantic.dev/latest/usage/pydantic_settings/) Python class
