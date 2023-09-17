@@ -6,7 +6,7 @@
 
 ## Installation
 
-```sh
+```shell
 cargo add env-settings
 cargo add env-settings-derive
 ```
@@ -15,13 +15,13 @@ cargo add env-settings-derive
 
 When you add the `EnvSettings` derive to a `struct`, two methods are added to it
 
--   ```rs
-    fn from_env() -> env_settings_utils::EnvSettingsResult<Self>
+-   ```rust
+    fn from_env(...) -> env_settings_utils::EnvSettingsResult<Self>
     ```
 
     It creates a new instance using just the environment variables. If something fails, it returns an `env_settings_utils::EnvSettingsError` error
 
--   ```rs
+-   ```rust
     fn new(...) -> env_settings_utils::EnvSettingsResult<Self>
     ```
 
@@ -29,12 +29,12 @@ When you add the `EnvSettings` derive to a `struct`, two methods are added to it
 
 ### Basic
 
-```sh
+```shell
 export name=paolo
 export favourite_number=42
 ```
 
-```rs
+```rust
 use env_settings_derive::EnvSettings;
 
 #[derive(EnvSettings)]
@@ -58,12 +58,12 @@ fn main() {
 
 ### Advanced
 
-```sh
+```shell
 echo "MY_STRUCT_FAVOURITE_NUMBER=42\n" > .env
 export MY_BIRTH_DATE=01/01/1970
 ```
 
-```rs
+```rust
 use env_settings_derive::EnvSettings;
 
 #[derive(EnvSettings)]
@@ -124,7 +124,7 @@ The current supported parameters for the structs are:
 The current supported parameters for the fields are:
 
 -   `default`: the default value to use if the environment variable is not found. By default, it is not set
--   `skip`: whether to skip the parsing of the environment variable
+-   `skip`: whether to skip the parsing of the environment variable. It is necessary if the type specified does not implement `std::str::FromStr`.
 -   `variable`: the environment variable to use for the lookup. By default, the name of the field
 
 ### Variables resolution hierarchy
@@ -148,7 +148,7 @@ Before starting to work on a contribution please read:
 
 When testing run:
 
-```sh
+```shell
 cargo test -- --test-threads=1
 ```
 
