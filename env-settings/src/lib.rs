@@ -22,17 +22,17 @@
 //!
 //! When you add the `EnvSettings` derive to a `struct`, two methods are added to it
 //!
-//! -   ```rust,no_run
-//!     fn from_env() -> env_settings_utils::EnvSettingsResult<Self>
-//!     ```
+//! ```ignore
+//! fn from_env(...) -> env_settings_utils::EnvSettingsResult<Self>
+//! ```
 //!
-//!     It creates a new instance using just the environment variables. If something fails, it returns an `env_settings_utils::EnvSettingsError` error
+//! It creates a new instance using just the environment variables. If something fails, it returns an `env_settings_utils::EnvSettingsError` error
 //!
-//! -   ```rust,no_run
-//!     fn new(...) -> env_settings_utils::EnvSettingsResult<Self>
-//!     ```
+//! ```ignore
+//! fn new(...) -> env_settings_utils::EnvSettingsResult<Self>
+//! ```
 //!
-//!     It creates a new instance using a combination of environment variables and parameters. More in detail, every field value can be passed as parameter wrapped in an `Option` object. Then if the parameter is `Some`, it is used, otherwise the value is recoved from the environment variables. If something fails, it returns an `env_settings_utils::EnvSettingsError` error
+//! It creates a new instance using a combination of environment variables and parameters. More in detail, every field value can be passed as parameter wrapped in an `Option` object. Then if the parameter is `Some`, it is used, otherwise the value is recoved from the environment variables. If something fails, it returns an `env_settings_utils::EnvSettingsError` error
 //!
 //! ### Basic
 //!
@@ -135,7 +135,7 @@
 //! The current supported parameters for the fields are:
 //!
 //! -   `default`: the default value to use if the environment variable is not found. By default, it is not set
-//! -   `skip`: whether to skip the parsing of the environment variable
+//! -   `skip`: whether to skip the parsing of the environment variable. It is necessary if the type specified does not implement `std::str::FromStr`
 //! -   `variable`: the environment variable to use for the lookup. By default, the name of the field
 //!
 //! ### Variables resolution hierarchy
