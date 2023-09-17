@@ -40,13 +40,13 @@ jobs:
       - name: Cargo login
         run: cargo login ${{ secrets.CRATES_API_TOKEN }}
 
-      - name: Release Rust library
-        run: cargo release --execute --no-confirm --tag-prefix "" --unpublished
-
       - name: Setup git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions@users.noreply.github.com"
+
+      - name: Release Rust library
+        run: cargo release --execute --no-confirm --tag-prefix "" --unpublished
 
       - name: Output tag
         id: tag
