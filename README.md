@@ -25,7 +25,7 @@ cargo add env-settings-derive
 
 ## Usage
 
-When you add the `EnvSettings` derive to a `struct`, two methods are added to it
+When you add the `EnvSettings` derive to a `struct`, two public methods are added to it
 
 -   ```rust
     fn from_env(...) -> env_settings_utils::EnvSettingsResult<Self>
