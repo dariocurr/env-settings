@@ -1,11 +1,16 @@
 # Env Settings
 
-![Env Settings](./docs/logo.svg "Env Settings")
+<p align="center">
+    <img src="./docs/logo.svg" alt="Env Settings" width="128" height="128">
+</p>
 
-[![crates.io](https://img.shields.io/crates/v/env-settings.svg)](https://crates.io/crates/env-settings)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](./Cargo.toml)
-[![License](https://img.shields.io/badge/license-Apache2.0-blue.svg)](./Cargo.toml)
-[![Validate](https://github.com/dariocurr/env-settings/actions/workflows/validate.yml/badge.svg)](https://github.com/dariocurr/env-settings/actions/workflows/validate.yml)
+<div align="center">
+
+<a href="https://crates.io/crates/env-settings">![crates](https://img.shields.io/crates/v/env-settings.svg)</a>
+<a href="https://github.com/dariocurr/env-settings/blob/main/Cargo.toml#L29">![license](https://img.shields.io/crates/l/env-settings)</a>
+<a href="https://github.com/dariocurr/env-settings/actions/workflows/validate.yml">![validate](https://github.com/dariocurr/env-settings/actions/workflows/validate.yml/badge.svg)</a>
+
+</div>
 
 **Env Settings** is a Rust library that helps you to initialize structs using environment variables
 
