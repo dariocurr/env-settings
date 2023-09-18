@@ -25,6 +25,8 @@ pub enum EnvSettingsError {
     NotExists(&'static str),
 }
 
+impl error::Error for EnvSettingsError {}
+
 impl fmt::Display for EnvSettingsError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
