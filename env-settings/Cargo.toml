@@ -15,5 +15,5 @@ repository.workspace = true
 version.workspace = true
 
 [dev-dependencies]
-env-settings-utils = "0.1"
 env-settings-derive = "0.1"
+env-settings-utils = "0.1"
