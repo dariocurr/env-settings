@@ -60,7 +60,7 @@ jobs:
           rustup toolchain install nightly
 
       - name: Check dependencies
-        run: cargo +nightly udeps
+        run: cargo +nightly udeps --workspace --exclude "env-settings*"
 
   format:
     if: github.event.pull_request.draft == false
