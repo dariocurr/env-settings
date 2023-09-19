@@ -20,19 +20,8 @@ jobs:
         with:
           ref: ${{ github.ref_name }}
 
-      - name: Cache Rust
-        uses: actions/cache@v3.3.2
-        with:
-          path: |
-            ~/.cargo
-            ./target/.rustc_info.json
-            ./target/CACHEDIR.TAG
-            ./target/debug
-            ./target/doc
-          key: ${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
-            ${{ runner.os }}
+      - name: Cache rust
+        uses: Swatinem/rust-cache@v2.7.0
 
       - name: Install cargo-release
         run: cargo install cargo-release
@@ -45,13 +34,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions@users.noreply.github.com"
 
-      - name: Release Rust library
+      - name: Release rust library
         run: cargo release --execute --no-confirm --tag-prefix "" --unpublished
-
-      - name: Setup git
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions@users.noreply.github.com"
 
       - name: Output tag
         id: tag
@@ -84,19 +68,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4.0.0
 
-      - name: Cache Rust
-        uses: actions/cache@v3.3.2
-        with:
-          path: |
-            ~/.cargo
-            ./target/.rustc_info.json
-            ./target/CACHEDIR.TAG
-            ./target/debug
-            ./target/doc
-          key: ${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
-            ${{ runner.os }}
+      - name: Cache rust
+        uses: Swatinem/rust-cache@v2.7.0
 
       - name: Install cargo-tarpaulin
         run: cargo install cargo-tarpaulin
@@ -122,10 +95,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4.0.0
 
-      - name: Merge ${{ github.base_ref }} -> develop
+      - name: Merge main -> develop
         uses: devmasx/merge-branch@v1.4.0
         with:
-          from_branch: ${{ github.base_ref }}
+          from_branch: main
           target_branch: develop
           github_token: ${{ github.token }}
           type: now
@@ -133,6 +106,9 @@ jobs:
       - uses: actions/checkout@v4.0.0
         with:
           ref: develop
+
+      - name: Install cargo-release
+        run: cargo install cargo-release
 
       - name: Setup git
         run: |
