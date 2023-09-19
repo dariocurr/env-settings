@@ -172,6 +172,8 @@ fn implement(input: &utils::input::EnvSettingsInput) -> TokenStream {
 
         impl #struct_name {
 
+            /// Create a new instance using just the environment variables. Skipped fields must be passed.
+            /// If something fails, it returns an `env_settings_utils::EnvSettingsError` error
             pub fn new(#(#new_args),*) -> env_settings_utils::EnvSettingsResult<Self> {
                 #pre_impls
                 let instance = Self {
@@ -180,6 +182,11 @@ fn implement(input: &utils::input::EnvSettingsInput) -> TokenStream {
                 Ok(instance)
             }
 
+            /// Create a new instance using a combination of environment variables and parameters.
+            /// More in detail, every field that can be initialized by the environment variables can be passed
+            /// as parameter wrapped in an `Option` object. Then if the parameter is `Some`, it is used,
+            /// otherwise the value is recoved from the environment variables. Skipped fields must be passed.
+            /// If something fails, it returns an `env_settings_utils::EnvSettingsError` error
             pub fn from_env(#(#from_env_args),*) -> env_settings_utils::EnvSettingsResult<Self> {
                 #pre_impls
                 let instance = Self {

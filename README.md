@@ -31,13 +31,13 @@ When you add the `EnvSettings` derive to a `struct`, two public methods are adde
     fn from_env(...) -> env_settings_utils::EnvSettingsResult<Self>
     ```
 
-    It creates a new instance using just the environment variables. If something fails, it returns an `env_settings_utils::EnvSettingsError` error
+    Create a new instance using just the environment variables. Skipped fields must be passed. If something fails, it returns an `env_settings_utils::EnvSettingsError` error
 
 -   ```rust
     fn new(...) -> env_settings_utils::EnvSettingsResult<Self>
     ```
 
-    It creates a new instance using a combination of environment variables and parameters. More in detail, every field value can be passed as parameter wrapped in an `Option` object. Then if the parameter is `Some`, it is used, otherwise the value is recoved from the environment variables. If something fails, it returns an `env_settings_utils::EnvSettingsError` error
+    Create a new instance using a combination of environment variables and parameters. More in detail, every field that can be initialized by the environment variables can be passed as parameter wrapped in an `Option` object. Then if the parameter is `Some`, it is used, otherwise the value is recoved from the environment variables. Skipped fields must be passed. If something fails, it returns an `env_settings_utils::EnvSettingsError` error
 
 ### Basic
 
