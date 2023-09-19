@@ -29,19 +29,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4.0.0
 
-      - name: Cache Rust
-        uses: actions/cache@v3.3.2
-        with:
-          path: |
-            ~/.cargo
-            ./target/.rustc_info.json
-            ./target/CACHEDIR.TAG
-            ./target/debug
-            ./target/doc
-          key: ${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
-            ${{ runner.os }}
+      - name: Cache rust
+        uses: Swatinem/rust-cache@v2.7.0
 
       - name: Install cargo-audit
         run: cargo install cargo-audit --locked
@@ -56,19 +45,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4.0.0
 
-      - name: Cache Rust
-        uses: actions/cache@v3.3.2
-        with:
-          path: |
-            ~/.cargo
-            ./target/.rustc_info.json
-            ./target/CACHEDIR.TAG
-            ./target/debug
-            ./target/doc
-          key: ${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
-            ${{ runner.os }}
+      - name: Cache rust
+        uses: Swatinem/rust-cache@v2.7.0
 
       - name: Check docs
         run: cargo doc
@@ -105,19 +83,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4.0.0
 
-      - name: Cache Rust
-        uses: actions/cache@v3.3.2
-        with:
-          path: |
-            ~/.cargo
-            ./target/.rustc_info.json
-            ./target/CACHEDIR.TAG
-            ./target/debug
-            ./target/doc
-          key: ${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
-            ${{ runner.os }}
+      - name: Cache rust
+        uses: Swatinem/rust-cache@v2.7.0
 
       - name: Run tests
         run: cargo test -- --test-threads=1
