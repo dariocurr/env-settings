@@ -18,6 +18,7 @@ version.workspace = true
 proc-macro = true
 
 [dependencies]
+env-settings-derive = "0.1"
 env-settings-utils = "0.1"
 proc-macro2 = "1.0"
 quote = "1.0"
