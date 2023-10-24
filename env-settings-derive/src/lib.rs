@@ -57,7 +57,7 @@ fn implement(input: &utils::input::EnvSettingsInput) -> TokenStream {
         env_settings_utils::get_env_variables(case_insensitive)
     };
 
-    let prefix = input.params.prefix.clone().unwrap_or(String::default());
+    let prefix = input.params.prefix.clone().unwrap_or_default();
 
     for field in &input.fields {
         match field {
