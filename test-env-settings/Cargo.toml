@@ -14,11 +14,8 @@ readme.workspace = true
 repository.workspace = true
 version.workspace = true
 
-[dependencies]
-
 [dev-dependencies]
 dotenvy = "0.15"
-env-settings = "0.1"
 env-settings-derive = "0.1"
 env-settings-utils = "0.1"
 rstest = "0.18"
