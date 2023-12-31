@@ -38,9 +38,7 @@ fn implement(input: &utils::input::EnvSettingsInput) -> TokenStream {
 
     if let Some(file_path) = &input.params.file_path {
         if input.params.delay {
-            file_path_impls = quote! {
-                env_settings_utils::load_env_file_path(#file_path)?;
-            }
+            file_path_impls = quote! { env_settings_utils::load_env_file_path(#file_path)?; }
         } else {
             env_settings_utils::load_env_file_path(file_path).unwrap();
         }
