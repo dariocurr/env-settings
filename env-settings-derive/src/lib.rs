@@ -61,7 +61,10 @@ fn implement(input: &utils::input::EnvSettingsInput) -> TokenStream {
 
     for field in &input.fields {
         match field {
-            utils::field::EnvSettingsField::NonParsable { name, type_ } => {
+            utils::field::EnvSettingsField::NonParsable(utils::field::NonParsableField {
+                name,
+                type_,
+            }) => {
                 let argument = quote! { #name: #type_ };
                 new_args.push(argument.clone());
                 from_env_args.push(argument);
@@ -69,7 +72,7 @@ fn implement(input: &utils::input::EnvSettingsInput) -> TokenStream {
                 new_impls.push(value.clone());
                 from_env_impls.push(value);
             }
-            utils::field::EnvSettingsField::Parsable {
+            utils::field::EnvSettingsField::Parsable(utils::field::ParsableField {
                 name,
                 name_label,
                 type_,
@@ -77,7 +80,7 @@ fn implement(input: &utils::input::EnvSettingsInput) -> TokenStream {
                 default,
                 optional_type,
                 variable,
-            } => {
+            }) => {
                 let mut env_variable = variable.to_owned().unwrap_or(format!("{}{}", prefix, name));
                 if case_insensitive {
                     env_variable = env_variable.to_lowercase();
@@ -114,7 +117,7 @@ fn implement(input: &utils::input::EnvSettingsInput) -> TokenStream {
                             match #value_to_parse.parse::<#parse_type>() {
                                 Ok(value) => #optional_value_impl,
                                 Err(_) => {
-                                    let value_to_parse = #value_to_parse.to_owned();
+                                    let value_to_parse = #value_to_parse;
                                     #convert_err_impl
                                 }
                             }
@@ -135,17 +138,15 @@ fn implement(input: &utils::input::EnvSettingsInput) -> TokenStream {
                 let env_value_impl = if input.params.delay {
                     quote! {
                         match env_variables.get(#env_variable) {
-                            Some(value_to_parse) => #parse_impl,
+                            Some(value_to_parse) => {#parse_impl},
                             None => #default_impl,
                         }
                     }
                 } else {
                     match env_variables.get(&env_variable) {
                         Some(value_to_parse) => quote! {
-                            {
-                                let value_to_parse = #value_to_parse.to_owned();
-                                #parse_impl
-                            }
+                            let value_to_parse = #value_to_parse;
+                            #parse_impl
                         },
                         None => default_impl,
                     }
