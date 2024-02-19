@@ -44,12 +44,10 @@ mod tests {
         Err(
             EnvSettingsError::File(
                 FILE_PATH.to_string(),
-                Box::new(
-                    dotenvy::Error::Io(io::Error::new(
-                        io::ErrorKind::NotFound,
-                        "No such file or directory (os error 2)"
-                    ))
-                )
+                dotenvy::Error::Io(io::Error::new(
+                    io::ErrorKind::NotFound,
+                    "No such file or directory (os error 2)"
+                ))
             )
         ),
     )]

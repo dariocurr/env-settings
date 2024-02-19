@@ -16,6 +16,6 @@ version.workspace = true
 
 [dev-dependencies]
 dotenvy = "0.15"
-env-settings-derive = "0.1"
-env-settings-utils = "0.1"
+env-settings-derive = { path = "./../env-settings-derive" }
+env-settings-utils = { path = "./../env-settings-utils" }
 rstest = "0.18"

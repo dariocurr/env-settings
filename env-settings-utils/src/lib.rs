@@ -7,7 +7,7 @@
 
 //! # **Env Settinsg Utils**
 
-use std::{collections, env, error};
+use std::{collections, env};
 
 /// The result type provided by `EnvSettings`
 pub type EnvSettingsResult<T> = Result<T, EnvSettingsError>;
@@ -21,7 +21,7 @@ pub enum EnvSettingsError {
 
     /// Error raised when environment variables resolution from a file fails
     #[error("Error occurs while reading `{0}` as environment variable file: {1}")]
-    File(String, Box<dyn error::Error>),
+    File(String, dotenvy::Error),
 
     /// Error raised when an environment variable not exists
     #[error("Environment variable named `{0}` not found")]
@@ -43,7 +43,7 @@ pub fn get_env_variables(case_insensitive: bool) -> collections::HashMap<String,
 /// Load the environment variables file path
 pub fn load_env_file_path(file_path: &str) -> EnvSettingsResult<()> {
     if let Err(err) = dotenvy::from_path(file_path) {
-        Err(EnvSettingsError::File(file_path.to_string(), err.into()))
+        Err(EnvSettingsError::File(file_path.to_string(), err))
     } else {
         Ok(())
     }
