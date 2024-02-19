@@ -5,46 +5,27 @@
     html_favicon_url = "https://raw.githubusercontent.com/dariocurr/env-settings/main/docs/logo.ico"
 )]
 
-//! # **Env Settinsg Utilss**
+//! # **Env Settinsg Utils**
 
-use std::{collections, env, error, fmt};
+use std::{collections, env, error};
 
 /// The result type provided by `EnvSettings`
 pub type EnvSettingsResult<T> = Result<T, EnvSettingsError>;
 
 /// The error that may occurs during `EnvSettings` resolution
-#[derive(Debug)]
+#[derive(Debug, thiserror::Error)]
 pub enum EnvSettingsError {
     /// Error raised when a convertion fails
+    #[error("Unable to convert the field `{0}`: `{1}` to `{2}`")]
     Convert(&'static str, String, &'static str),
 
     /// Error raised when environment variables resolution from a file fails
+    #[error("Error occurs while reading `{0}` as environment variable file: {1}")]
     File(String, Box<dyn error::Error>),
 
     /// Error raised when an environment variable not exists
+    #[error("Environment variable named `{0}` not found")]
     NotExists(&'static str),
-}
-
-impl error::Error for EnvSettingsError {}
-
-impl fmt::Display for EnvSettingsError {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self {
-            EnvSettingsError::NotExists(env_variable) => {
-                write!(f, "Environment variable named `{}` not found", env_variable)
-            }
-            EnvSettingsError::Convert(field_name, field_value, field_type) => write!(
-                f,
-                "Unable to convert the field `{}`: `{}` to `{}`",
-                field_name, field_value, field_type
-            ),
-            EnvSettingsError::File(file_path, err) => write!(
-                f,
-                "Error occurs while reading `{}` as environment variable file: {}",
-                file_path, err
-            ),
-        }
-    }
 }
 
 /// Get the environment variables
