@@ -5,16 +5,15 @@
     html_favicon_url = "https://raw.githubusercontent.com/dariocurr/env-settings/main/docs/logo.ico"
 )]
 
-//! # **Env Settinsg Utilss**
+//! # **Env Settinsg Utils**
 
 use std::{collections, env};
-use thiserror::Error;
 
 /// The result type provided by `EnvSettings`
 pub type EnvSettingsResult<T> = Result<T, EnvSettingsError>;
 
 /// The error that may occurs during `EnvSettings` resolution
-#[derive(Debug, Error)]
+#[derive(Debug, thiserror::Error)]
 pub enum EnvSettingsError {
     /// Error raised when a convertion fails
     #[error("Unable to convert the field `{0}`: `{1}` to `{2}`")]
