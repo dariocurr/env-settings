@@ -28,6 +28,21 @@ pub enum EnvSettingsError {
     NotExists(&'static str),
 }
 
+impl PartialEq for EnvSettingsError {
+    fn eq(&self, other: &Self) -> bool {
+        match (self, other) {
+            (Self::Convert(l0, l1, l2), Self::Convert(r0, r1, r2)) => {
+                l0 == r0 && l1 == r1 && l2 == r2
+            }
+            (Self::File(l0, l1), Self::File(r0, r1)) => {
+                l0 == r0 && l1.to_string() == r1.to_string()
+            }
+            (Self::NotExists(l0), Self::NotExists(r0)) => l0 == r0,
+            _ => false,
+        }
+    }
+}
+
 /// Get the environment variables
 pub fn get_env_variables(case_insensitive: bool) -> collections::HashMap<String, String> {
     let env_variables = env::vars();
