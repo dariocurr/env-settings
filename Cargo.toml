@@ -29,4 +29,4 @@ keywords = [
 license = "MIT OR Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/dariocurr/env-settings"
-version = "0.1.10"
+version = "0.1.11"
