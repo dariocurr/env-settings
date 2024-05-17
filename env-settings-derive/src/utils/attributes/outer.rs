@@ -29,10 +29,10 @@ impl EnvSettingsOuterParams {
             env_settings_outer_params.delay = true;
         }
         if let Some(file_path) = params.get("file_path") {
-            env_settings_outer_params.file_path = file_path.to_owned();
+            file_path.clone_into(&mut env_settings_outer_params.file_path);
         }
         if let Some(prefix) = params.get("prefix") {
-            env_settings_outer_params.prefix = prefix.to_owned();
+            prefix.clone_into(&mut env_settings_outer_params.prefix);
         };
         Ok(env_settings_outer_params)
     }
