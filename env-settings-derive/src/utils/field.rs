@@ -76,7 +76,7 @@ impl EnvSettingsField {
         let mut segments = type_path.path.segments.to_owned();
         let optional_type = Self::get_optional_type(&segments);
         if let Some(Type::Path(optional_type_path)) = &optional_type {
-            segments = optional_type_path.path.segments.to_owned();
+            optional_type_path.path.segments.clone_into(&mut segments);
         }
         let type_label = segments
             .into_iter()

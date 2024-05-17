@@ -20,10 +20,10 @@ impl EnvSettingsInnerParams {
         let params = EnvSettingsInput::parse_attributes(attributes)?;
         let mut env_settings_inner_params = EnvSettingsInnerParams::default();
         if let Some(default) = params.get("default") {
-            env_settings_inner_params.default = default.to_owned();
+            default.clone_into(&mut env_settings_inner_params.default);
         }
         if let Some(variable) = params.get("variable") {
-            env_settings_inner_params.variable = variable.to_owned();
+            variable.clone_into(&mut env_settings_inner_params.variable);
         }
         if params.contains_key("skip") {
             env_settings_inner_params.skip = true;
