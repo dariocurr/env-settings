@@ -39,7 +39,9 @@ mod tests {
             .iter()
             .for_each(|(key, value)| env::set_var(key, value));
         let actual_result = fn_();
-        env_variables.keys().for_each(env::remove_var);
+        env_variables
+            .keys()
+            .for_each(|env_variable| env::remove_var(env_variable));
         assert_result(&actual_result, expected_result);
         actual_result
     }
@@ -63,7 +65,9 @@ mod tests {
         });
         let actual_result = fn_();
         fs::remove_file(file_path).expect(TEMP_FILE_ERROR);
-        env_file_variables.keys().for_each(env::remove_var);
+        env_file_variables
+            .keys()
+            .for_each(|env_file_variable| env::remove_var(env_file_variable));
         assert_result(&actual_result, expected_result);
         actual_result
     }
