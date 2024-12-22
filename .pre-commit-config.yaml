@@ -25,7 +25,3 @@ repos:
         args: [--autofix, --no-sort-keys]
       - id: sort-simple-yaml
       - id: trailing-whitespace
-
-ci:
-    autoupdate_branch: develop
-    autoupdate_commit_msg: ⬆ [pre-commit.ci] pre-commit autoupdate
