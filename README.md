@@ -7,7 +7,7 @@
 <div align="center">
 
 <a href="https://crates.io/crates/env-settings">![crates](https://img.shields.io/crates/v/env-settings.svg)</a>
-<a href="https://github.com/dariocurr/env-settings/blob/main/Cargo.toml#L29">![license](https://img.shields.io/crates/l/env-settings)</a>
+<a href="https://github.com/dariocurr/env-settings/blob/main/LICENSE">![license](https://img.shields.io/crates/l/env-settings)</a>
 <a href="https://github.com/dariocurr/env-settings/actions/workflows/validate.yml">![validate](https://github.com/dariocurr/env-settings/actions/workflows/validate.yml/badge.svg)</a>
 
 </div>
@@ -26,13 +26,13 @@ cargo add env-settings env-settings-derive env-settings-utils
 
 When you add the `EnvSettings` derive to a `struct`, two public methods are added to it
 
--   ```rust
+- ```rust
     fn from_env(...) -> env_settings_utils::EnvSettingsResult<Self>
     ```
 
     Create a new instance using just the environment variables. Skipped fields must be passed. If something fails, it returns an `env_settings_utils::EnvSettingsError` error
 
--   ```rust
+- ```rust
     fn new(...) -> env_settings_utils::EnvSettingsResult<Self>
     ```
 
@@ -125,18 +125,18 @@ fn main() {
 
 The current supported parameters for the structs are:
 
--   `case_insensitive`: whether the environment variables matching should be case insensitive. By default, matching is case sensitive.
--   `delay`: whether to delay the lookup for environment variables from compilation time to run time. By default the lookup is performed at compilation time
--   `file_path`: the file path to read to add some environment variables (e.g. `.env`). By default, it is not set
--   `prefix`: the prefix to add to the name of the struct fields before matching the environment variables. By default, it is not set
+- `case_insensitive`: whether the environment variables matching should be case insensitive. By default, matching is case sensitive.
+- `delay`: whether to delay the lookup for environment variables from compilation time to run time. By default the lookup is performed at compilation time
+- `file_path`: the file path to read to add some environment variables (e.g. `.env`). By default, it is not set
+- `prefix`: the prefix to add to the name of the struct fields before matching the environment variables. By default, it is not set
 
 #### Field
 
 The current supported parameters for the fields are:
 
--   `default`: the default value to use if the environment variable is not found. By default, it is not set
--   `skip`: whether to skip the parsing of the environment variable. It is necessary if the type specified does not implement `std::str::FromStr`.
--   `variable`: the environment variable to use for the lookup. By default, the name of the field
+- `default`: the default value to use if the environment variable is not found. By default, it is not set
+- `skip`: whether to skip the parsing of the environment variable. It is necessary if the type specified does not implement `std::str::FromStr`.
+- `variable`: the environment variable to use for the lookup. By default, the name of the field
 
 ### Variables resolution hierarchy
 
@@ -149,11 +149,11 @@ The current supported parameters for the fields are:
 
 Before starting to work on a contribution please read:
 
--   [Code of Conduct](https://github.com/dariocurr/.github/blob/main/.github/CODE_OF_CONDUCT.md)
--   [Contributing](https://github.com/dariocurr/.github/blob/main/.github/CONTRIBUTING.md)
--   [Goverance](https://github.com/dariocurr/.github/blob/main/.github/GOVERNANCE.md)
--   [Security](https://github.com/dariocurr/.github/blob/main/.github/SECURITY.md)
--   [Support](https://github.com/dariocurr/.github/blob/main/.github/SUPPORT.md)
+- [Code of Conduct](https://github.com/dariocurr/.github/blob/main/.github/CODE_OF_CONDUCT.md)
+- [Contributing](https://github.com/dariocurr/.github/blob/main/.github/CONTRIBUTING.md)
+- [Goverance](https://github.com/dariocurr/.github/blob/main/.github/GOVERNANCE.md)
+- [Security](https://github.com/dariocurr/.github/blob/main/.github/SECURITY.md)
+- [Support](https://github.com/dariocurr/.github/blob/main/.github/SUPPORT.md)
 
 ### Run tests
 
