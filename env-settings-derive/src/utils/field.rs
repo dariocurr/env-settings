@@ -1,8 +1,8 @@
 use crate::utils::attributes::inner::EnvSettingsInnerParams;
 
 use syn::{
-    punctuated, token, Attribute, Data, Error, Fields, GenericArgument, Ident, PathArguments,
-    PathSegment, Result, Type, TypePath,
+    Attribute, Data, Error, Fields, GenericArgument, Ident, PathArguments, PathSegment, Result,
+    Type, TypePath, punctuated, token,
 };
 
 /// A non parsable field
@@ -41,19 +41,20 @@ pub(crate) struct ParsableField {
 /// The field info needed to the `EnvSettings` derive
 pub(crate) enum EnvSettingsField {
     /// A non parsable field
-    NonParsable(NonParsableField),
+    NonParsable(Box<NonParsableField>),
 
     //// A parsable field
-    Parsable(ParsableField),
+    Parsable(Box<ParsableField>),
 }
 
 impl EnvSettingsField {
     fn get_field(type_: &Type, name: &Ident, attrs: &[Attribute]) -> Result<Self> {
         let params = EnvSettingsInnerParams::parse_attributes(attrs)?;
-        let non_parsable_field = EnvSettingsField::NonParsable(NonParsableField {
+        let non_parsable_field = NonParsableField {
             name: name.to_owned(),
             type_: type_.to_owned(),
-        });
+        };
+        let non_parsable_field = EnvSettingsField::NonParsable(Box::new(non_parsable_field));
         let field = if params.skip {
             non_parsable_field
         } else {
@@ -84,7 +85,7 @@ impl EnvSettingsField {
             .collect::<Vec<String>>()
             .join("::");
 
-        let parsable_field = EnvSettingsField::Parsable(ParsableField {
+        let parsable_field = ParsableField {
             name: name.to_owned(),
             name_label: name.to_string(),
             type_: type_.to_owned(),
@@ -92,7 +93,8 @@ impl EnvSettingsField {
             default: params.default,
             optional_type,
             variable: params.variable,
-        });
+        };
+        let parsable_field = EnvSettingsField::Parsable(Box::new(parsable_field));
         Ok(parsable_field)
     }
 

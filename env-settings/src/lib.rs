@@ -42,9 +42,13 @@
 //!
 //! ```rust
 //! // `export name=paolo` in shell or
-//! std::env::set_var("name", "paolo");
+//! unsafe {
+//!     std::env::set_var("name", "paolo");
+//! }
 //! // `export favourite_number=42` in shell or
-//! std::env::set_var("favourite_number", "42");
+//! unsafe {
+//!     std::env::set_var("favourite_number", "42");
+//! }
 //!
 //!
 //! use env_settings_derive::EnvSettings;
@@ -77,7 +81,9 @@
 //! let mut env_file = std::fs::File::create(".env").unwrap();
 //! env_file.write_all("MY_STRUCT_FAVOURITE_NUMBER=42\n".as_bytes()).unwrap();
 //! // `export MY_BIRTH_DATE=01/01/1970` in shell or
-//! std::env::set_var("MY_BIRTH_DATE", "01/01/1970");
+//! unsafe {
+//!     std::env::set_var("MY_BIRTH_DATE", "01/01/1970");
+//! }
 //!
 //!
 //! use env_settings_derive::EnvSettings;

@@ -85,7 +85,9 @@ mod tests {
         #[case] recover_key: &str,
         #[case] expected_result: Option<&str>,
     ) {
-        env::set_var(key, value);
+        unsafe {
+            env::set_var(key, value);
+        }
         let env_variables = get_env_variables(case_insensitive);
         let actual_result = env_variables.get(recover_key).map(|value| value.as_str());
         assert_eq!(actual_result, expected_result);

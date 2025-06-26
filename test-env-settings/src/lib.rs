@@ -35,13 +35,13 @@ mod tests {
         fn_: F,
         expected_result: &EnvSettingsResult<E>,
     ) -> EnvSettingsResult<E> {
-        env_variables
-            .iter()
-            .for_each(|(key, value)| env::set_var(key, value));
+        env_variables.iter().for_each(|(key, value)| unsafe {
+            env::set_var(key, value);
+        });
         let actual_result = fn_();
-        env_variables
-            .keys()
-            .for_each(|env_variable| env::remove_var(env_variable));
+        env_variables.keys().for_each(|env_variable| unsafe {
+            env::remove_var(env_variable);
+        });
         assert_result(&actual_result, expected_result);
         actual_result
     }
@@ -67,7 +67,9 @@ mod tests {
         fs::remove_file(file_path).expect(TEMP_FILE_ERROR);
         env_file_variables
             .keys()
-            .for_each(|env_file_variable| env::remove_var(env_file_variable));
+            .for_each(|env_file_variable| unsafe {
+                env::remove_var(env_file_variable);
+            });
         assert_result(&actual_result, expected_result);
         actual_result
     }

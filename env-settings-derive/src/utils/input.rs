@@ -2,7 +2,7 @@ use crate::utils::{attributes, field};
 
 use proc_macro2::TokenTree;
 use std::collections::HashMap;
-use syn::{parse, Attribute, DeriveInput, Error, Ident, Meta, MetaList, Result};
+use syn::{Attribute, DeriveInput, Error, Ident, Meta, MetaList, Result, parse};
 
 /// The `EnvSettings` macro input
 pub(crate) struct EnvSettingsInput {

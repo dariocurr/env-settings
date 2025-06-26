@@ -8,7 +8,9 @@ members = [
 resolver = "2"
 
 [workspace.package]
-authors = ["Dario Curreri <dariocurr@gmail.com>"]
+authors = [
+	"Dario Curreri <dariocurr@gmail.com>",
+]
 categories = [
 	"config",
 	"filesystem",
@@ -17,7 +19,7 @@ categories = [
 ]
 description = "Initialize Rust structs using environment variables (like `pydantic`'s `BaseSettings`)"
 documentation = "http://docs.rs/env-settings/"
-edition = "2021"
+edition = "2024"
 homepage = "https://github.com/dariocurr/env-settings"
 keywords = [
 	"BaseSettings",
