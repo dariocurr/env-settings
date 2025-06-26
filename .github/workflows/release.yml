@@ -1,4 +1,4 @@
-name: Release
+name: release
 
 on:
   workflow_dispatch:
@@ -20,24 +20,24 @@ jobs:
         with:
           ref: ${{ github.ref_name }}
 
-      - name: Cache rust
+      - name: cache rust
         uses: Swatinem/rust-cache@v2.8.0
 
-      - name: Install cargo-release
+      - name: install cargo-release
         run: cargo install cargo-release
 
-      - name: Cargo login
+      - name: cargo login
         run: cargo login ${{ secrets.CRATES_API_TOKEN }}
 
-      - name: Setup git
+      - name: setup git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions@users.noreply.github.com"
 
-      - name: Release rust library
+      - name: release rust library
         run: cargo release --execute --no-confirm --tag-prefix "" --unpublished
 
-      - name: Output tag
+      - name: output tag
         id: tag
         run: echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
 
@@ -50,7 +50,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.2.2
 
-      - name: Create Github release
+      - name: create Github release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.release.outputs.tag }}
@@ -68,24 +68,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4.2.2
 
-      - name: Cache rust
+      - name: cache rust
         uses: Swatinem/rust-cache@v2.8.0
 
-      - name: Install cargo-tarpaulin
+      - name: install cargo-tarpaulin
         run: cargo install cargo-tarpaulin
 
-      - name: Generate coverage report
+      - name: generate coverage report
         run: |
           cargo tarpaulin --out html -- --test-threads=1
           mkdir tarpaulin
           mv ./tarpaulin-report.html ./tarpaulin/index.html
 
-      - name: Upload GitHub Pages artifact
+      - name: upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3.0.1
         with:
           path: ./tarpaulin
 
-      - name: Deploy to GitHub Pages
+      - name: deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4.0.5
 
@@ -95,7 +95,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.2.2
 
-      - name: Merge main -> develop
+      - name: merge main -> develop
         uses: devmasx/merge-branch@v1.4.0
         with:
           from_branch: main
@@ -107,15 +107,15 @@ jobs:
         with:
           ref: develop
 
-      - name: Install cargo-release
+      - name: install cargo-release
         run: cargo install cargo-release
 
-      - name: Setup git
+      - name: setup git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions@users.noreply.github.com"
 
-      - name: Update version
+      - name: update version
         run: |
           cargo release version patch --execute --no-confirm
           git add Cargo.toml
