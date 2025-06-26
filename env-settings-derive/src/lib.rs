@@ -59,10 +59,9 @@ fn implement(input: &utils::input::EnvSettingsInput) -> TokenStream {
 
     for field in &input.fields {
         match field {
-            utils::field::EnvSettingsField::NonParsable(utils::field::NonParsableField {
-                name,
-                type_,
-            }) => {
+            utils::field::EnvSettingsField::NonParsable(non_parsable_field) => {
+                let name = &non_parsable_field.name;
+                let type_ = &non_parsable_field.type_;
                 let argument = quote! { #name: #type_ };
                 new_args.push(argument.clone());
                 from_env_args.push(argument);
@@ -70,16 +69,17 @@ fn implement(input: &utils::input::EnvSettingsInput) -> TokenStream {
                 new_impls.push(value.clone());
                 from_env_impls.push(value);
             }
-            utils::field::EnvSettingsField::Parsable(utils::field::ParsableField {
-                name,
-                name_label,
-                type_,
-                type_label,
-                default,
-                optional_type,
-                variable,
-            }) => {
-                let mut env_variable = variable.to_owned().unwrap_or(format!("{}{}", prefix, name));
+            utils::field::EnvSettingsField::Parsable(parsable_field) => {
+                let name = &parsable_field.name;
+                let name_label = &parsable_field.name_label;
+                let type_ = &parsable_field.type_;
+                let type_label = &parsable_field.type_label;
+                let optional_type = &parsable_field.optional_type;
+
+                let mut env_variable = parsable_field
+                    .variable
+                    .to_owned()
+                    .unwrap_or(format!("{}{}", prefix, name));
                 if case_insensitive {
                     env_variable = env_variable.to_lowercase();
                 }
@@ -109,7 +109,7 @@ fn implement(input: &utils::input::EnvSettingsInput) -> TokenStream {
                         #type_label,
                     ))
                 };
-                let default_impl = match default {
+                let default_impl = match &parsable_field.default {
                     Some(value_to_parse) => {
                         quote! {
                             match #value_to_parse.parse::<#parse_type>() {
@@ -167,7 +167,7 @@ fn implement(input: &utils::input::EnvSettingsInput) -> TokenStream {
         #env_variables_impls
     };
 
-    let gen = quote! {
+    let generated_impl = quote! {
 
         impl #struct_name {
 
@@ -200,5 +200,5 @@ fn implement(input: &utils::input::EnvSettingsInput) -> TokenStream {
 
     };
 
-    gen.into()
+    generated_impl.into()
 }
