@@ -79,7 +79,7 @@ fn implement(input: &utils::input::EnvSettingsInput) -> TokenStream {
                 let mut env_variable = parsable_field
                     .variable
                     .to_owned()
-                    .unwrap_or(format!("{}{}", prefix, name));
+                    .unwrap_or(format!("{prefix}{name}"));
                 if case_insensitive {
                     env_variable = env_variable.to_lowercase();
                 }

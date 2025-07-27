@@ -110,7 +110,7 @@ mod tests {
             fs::create_dir_all(&temp_dir)
                 .expect("Error occurs while creating the test temp directory!");
             let temp_file_path = temp_dir.join("test_file");
-            let pair = format!("{}={}\n", key, value);
+            let pair = format!("{key}={value}\n");
             let mut temp_file = fs::File::create(&temp_file_path)
                 .expect("Error occurs while creating the test temp file!");
             temp_file

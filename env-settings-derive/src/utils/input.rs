@@ -49,7 +49,7 @@ impl EnvSettingsInput {
                                         }
                                         _ => {
                                             let error_message =
-                                                format!("punct value `{}` unexpected", punct);
+                                                format!("punct value `{punct}` unexpected");
                                             return Err(Error::new(punct.span(), error_message));
                                         }
                                     }
@@ -59,13 +59,12 @@ impl EnvSettingsInput {
                             }
                             TokenTree::Punct(punct) => {
                                 if punct.as_char() != ',' {
-                                    let error_message =
-                                        format!("punct value `{}` unexpected", punct);
+                                    let error_message = format!("punct value `{punct}` unexpected");
                                     return Err(Error::new(punct.span(), error_message));
                                 }
                             }
                             _ => {
-                                let error_message = format!("token value `{}` unexpected", token);
+                                let error_message = format!("token value `{token}` unexpected");
                                 return Err(Error::new(token.span(), error_message));
                             }
                         };
