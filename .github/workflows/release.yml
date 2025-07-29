@@ -50,7 +50,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.2.2
 
-      - name: create Github release
+      - name: create github release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.release.outputs.tag }}
@@ -80,12 +80,12 @@ jobs:
           mkdir tarpaulin
           mv ./tarpaulin-report.html ./tarpaulin/index.html
 
-      - name: upload GitHub Pages artifact
+      - name: upload github pages artifact
         uses: actions/upload-pages-artifact@v3.0.1
         with:
           path: ./tarpaulin
 
-      - name: deploy to GitHub Pages
+      - name: deploy to github pages
         id: deployment
         uses: actions/deploy-pages@v4.0.5
 
@@ -121,5 +121,5 @@ jobs:
         run: |
           cargo release version patch --execute --no-confirm
           git add Cargo.toml
-          git commit --message "Update version: patch"
+          git commit --message "update version: patch"
           git push
