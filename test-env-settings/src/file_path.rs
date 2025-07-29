@@ -38,7 +38,7 @@ mod tests {
         Ok(TestEnvSettings { name: "lorem".to_string(), age: 42 })
     )]
     #[case(
-        &format!("_{}", FILE_PATH),
+        &format!("_{FILE_PATH}"),
         HashMap::from([]),
         HashMap::from([]),
         Err(

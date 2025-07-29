@@ -60,7 +60,7 @@ mod tests {
     ) -> EnvSettingsResult<E> {
         let mut temp_file = fs::File::create(file_path).expect(TEMP_FILE_ERROR);
         env_file_variables.iter().for_each(|(key, value)| {
-            let pair = format!("{}={}\n", key, value);
+            let pair = format!("{key}={value}\n");
             temp_file.write_all(pair.as_bytes()).expect(TEMP_FILE_ERROR);
         });
         let actual_result = fn_();

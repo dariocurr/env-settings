@@ -1,4 +1,4 @@
-name: Validate
+name: validate
 
 on:
   push:
@@ -24,56 +24,64 @@ on:
 jobs:
   audit:
     if: github.event.pull_request.draft == false
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4.2.2
 
-      - name: Cache rust
+      - name: cache rust
         uses: Swatinem/rust-cache@v2.8.0
 
-      - name: Install cargo-audit
+      - name: install cargo-audit
         run: cargo install cargo-audit --locked
 
-      - name: Check audit
+      - name: check audit
         run: cargo audit --deny warnings
 
   docs-lint-deps:
     if: github.event.pull_request.draft == false
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4.2.2
 
-      - name: Cache rust
+      - name: cache rust
         uses: Swatinem/rust-cache@v2.8.0
 
-      - name: Check docs
+      - name: check docs
         run: cargo doc
 
-      - name: Check linting
+      - name: check linting
         run: cargo clippy -- --deny warnings
 
-      - name: Install cargo utils
+      - name: install cargo utils
         run: |
           cargo install cargo-udeps --locked
           rustup toolchain install nightly
 
-      - name: Check dependencies
+      - name: check dependencies
         run: cargo +nightly udeps --workspace --exclude "env-settings*"
 
   format:
     if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4.2.2
 
-      - name: Check formatting
+      - name: check formatting
         run: cargo fmt --check
 
   test:
     if: github.event.pull_request.draft == false
+    permissions:
+      contents: read
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: true
@@ -83,8 +91,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4.2.2
 
-      - name: Cache rust
+      - name: cache rust
         uses: Swatinem/rust-cache@v2.8.0
 
-      - name: Run tests
+      - name: run tests
         run: cargo test -- --test-threads=1

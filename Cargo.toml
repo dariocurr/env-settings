@@ -9,7 +9,7 @@ resolver = "2"
 
 [workspace.package]
 authors = [
-	"Dario Curreri <dariocurr@gmail.com>",
+	"dariocurr <dariocurr@gmail.com>",
 ]
 categories = [
 	"config",
@@ -17,7 +17,7 @@ categories = [
 	"os",
 	"parsing",
 ]
-description = "Initialize Rust structs using environment variables (like `pydantic`'s `BaseSettings`)"
+description = "initialize rust structs using environment variables (like `pydantic`'s `BaseSettings`)"
 documentation = "http://docs.rs/env-settings/"
 edition = "2024"
 homepage = "https://github.com/dariocurr/env-settings"
@@ -31,4 +31,4 @@ keywords = [
 license = "MIT OR Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/dariocurr/env-settings"
-version = "0.1.12"
+version = "0.1.13"
