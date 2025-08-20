@@ -57,7 +57,8 @@ jobs:
       - name: setup rust
         uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: stable
+          components: clippy
+          toolchain: nightly
 
       - name: cache rust
         uses: Swatinem/rust-cache@v2.8.0
@@ -67,6 +68,9 @@ jobs:
 
       - name: check docs
         run: cargo +stable doc --no-deps
+
+      - name: install cargo-udeps
+        run: cargo install cargo-udeps --locked
 
       - name: check dependencies
         run: cargo +nightly udeps --locked
