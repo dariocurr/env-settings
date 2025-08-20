@@ -23,52 +23,52 @@ impl EnvSettingsInput {
     ) -> Result<HashMap<String, Option<String>>> {
         let mut params = HashMap::new();
         for attribute in attributes {
-            if attribute.meta.path().is_ident("env_settings") {
-                if let Meta::List(MetaList { tokens, .. }) = &attribute.meta {
-                    let mut tokens_iterator = tokens.clone().into_iter();
-                    while let Some(token) = tokens_iterator.next() {
-                        match token {
-                            TokenTree::Ident(ident) => {
-                                if let Some(TokenTree::Punct(punct)) = tokens_iterator.next() {
-                                    match punct.as_char() {
-                                        '=' => {
-                                            if let Some(TokenTree::Literal(literal)) =
-                                                tokens_iterator.next()
-                                            {
-                                                let value = literal.to_string().replace('\"', "");
-                                                params.insert(ident.to_string(), Some(value));
-                                            } else {
-                                                return Err(Error::new(
-                                                    punct.span(),
-                                                    "literal value expected",
-                                                ));
-                                            }
-                                        }
-                                        ',' => {
-                                            params.insert(ident.to_string(), None);
-                                        }
-                                        _ => {
-                                            let error_message =
-                                                format!("punct value `{punct}` unexpected");
-                                            return Err(Error::new(punct.span(), error_message));
+            if attribute.meta.path().is_ident("env_settings")
+                && let Meta::List(MetaList { tokens, .. }) = &attribute.meta
+            {
+                let mut tokens_iterator = tokens.clone().into_iter();
+                while let Some(token) = tokens_iterator.next() {
+                    match token {
+                        TokenTree::Ident(ident) => {
+                            if let Some(TokenTree::Punct(punct)) = tokens_iterator.next() {
+                                match punct.as_char() {
+                                    '=' => {
+                                        if let Some(TokenTree::Literal(literal)) =
+                                            tokens_iterator.next()
+                                        {
+                                            let value = literal.to_string().replace('\"', "");
+                                            params.insert(ident.to_string(), Some(value));
+                                        } else {
+                                            return Err(Error::new(
+                                                punct.span(),
+                                                "literal value expected",
+                                            ));
                                         }
                                     }
-                                } else {
-                                    params.insert(ident.to_string(), None);
+                                    ',' => {
+                                        params.insert(ident.to_string(), None);
+                                    }
+                                    _ => {
+                                        let error_message =
+                                            format!("punct value `{punct}` unexpected");
+                                        return Err(Error::new(punct.span(), error_message));
+                                    }
                                 }
+                            } else {
+                                params.insert(ident.to_string(), None);
                             }
-                            TokenTree::Punct(punct) => {
-                                if punct.as_char() != ',' {
-                                    let error_message = format!("punct value `{punct}` unexpected");
-                                    return Err(Error::new(punct.span(), error_message));
-                                }
+                        }
+                        TokenTree::Punct(punct) => {
+                            if punct.as_char() != ',' {
+                                let error_message = format!("punct value `{punct}` unexpected");
+                                return Err(Error::new(punct.span(), error_message));
                             }
-                            _ => {
-                                let error_message = format!("token value `{token}` unexpected");
-                                return Err(Error::new(token.span(), error_message));
-                            }
-                        };
-                    }
+                        }
+                        _ => {
+                            let error_message = format!("token value `{token}` unexpected");
+                            return Err(Error::new(token.span(), error_message));
+                        }
+                    };
                 }
             }
         }
