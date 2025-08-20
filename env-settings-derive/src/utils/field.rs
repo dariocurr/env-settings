@@ -101,14 +101,14 @@ impl EnvSettingsField {
     fn get_optional_type(
         segments: &punctuated::Punctuated<PathSegment, token::PathSep>,
     ) -> Option<Type> {
-        if segments[0].ident == "Option" {
-            if let PathArguments::AngleBracketed(arguments) = &segments[0].arguments {
-                if let GenericArgument::Type(optional_type) = &arguments.args[0] {
-                    return Some(optional_type.to_owned());
-                }
-            }
+        if segments[0].ident == "Option"
+            && let PathArguments::AngleBracketed(arguments) = &segments[0].arguments
+            && let GenericArgument::Type(optional_type) = &arguments.args[0]
+        {
+            Some(optional_type.to_owned())
+        } else {
+            None
         }
-        None
     }
 
     /// Parse the fields of the input
