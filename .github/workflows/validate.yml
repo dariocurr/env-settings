@@ -23,13 +23,18 @@ on:
 
 jobs:
   audit:
-    if: github.event.pull_request.draft == false
     permissions:
       contents: read
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v5.0.0
+      - name: checkout origin repo
+        uses: actions/checkout@v5.0.0
+
+      - name: setup rust
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
 
       - name: cache rust
         uses: Swatinem/rust-cache@v2.8.0
@@ -41,55 +46,64 @@ jobs:
         run: cargo audit --deny warnings
 
   docs-lint-deps:
-    if: github.event.pull_request.draft == false
     permissions:
       contents: read
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v5.0.0
+      - name: checkout origin repo
+        uses: actions/checkout@v5.0.0
+
+      - name: setup rust
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
 
       - name: cache rust
         uses: Swatinem/rust-cache@v2.8.0
 
+      - name: check lint
+        run: cargo +stable clippy -- --deny warnings
+
       - name: check docs
-        run: cargo doc
-
-      - name: check linting
-        run: cargo clippy -- --deny warnings
-
-      - name: install cargo utils
-        run: |
-          cargo install cargo-udeps --locked
-          rustup toolchain install nightly
+        run: cargo +stable doc --no-deps
 
       - name: check dependencies
-        run: cargo +nightly udeps --workspace --exclude "env-settings*"
+        run: cargo +nightly udeps --locked
 
   format:
-    if: github.event.pull_request.draft == false
-    runs-on: ubuntu-latest
     permissions:
       contents: read
-    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v5.0.0
+      - name: checkout origin repo
+        uses: actions/checkout@v5.0.0
 
-      - name: check formatting
+      - name: setup rust
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+
+      - name: cache rust
+        uses: Swatinem/rust-cache@v2.8.0
+
+      - name: check format
         run: cargo fmt --check
 
   test:
-    if: github.event.pull_request.draft == false
     permissions:
       contents: read
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: true
-      matrix:
-        os: [ubuntu-latest]
-    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v5.0.0
+      - name: checkout origin repo
+        uses: actions/checkout@v5.0.0
+
+      - name: setup rust
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
 
       - name: cache rust
         uses: Swatinem/rust-cache@v2.8.0
