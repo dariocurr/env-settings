@@ -37,7 +37,7 @@ jobs:
           toolchain: stable
 
       - name: cache rust
-        uses: Swatinem/rust-cache@v2.8.0
+        uses: Swatinem/rust-cache@v2.8.1
 
       - name: install cargo-audit
         run: cargo install cargo-audit --locked
@@ -61,7 +61,7 @@ jobs:
           toolchain: nightly
 
       - name: cache rust
-        uses: Swatinem/rust-cache@v2.8.0
+        uses: Swatinem/rust-cache@v2.8.1
 
       - name: check lint
         run: cargo +stable clippy -- --deny warnings
@@ -90,7 +90,7 @@ jobs:
           toolchain: stable
 
       - name: cache rust
-        uses: Swatinem/rust-cache@v2.8.0
+        uses: Swatinem/rust-cache@v2.8.1
 
       - name: check format
         run: cargo fmt --check
@@ -110,7 +110,7 @@ jobs:
           toolchain: stable
 
       - name: cache rust
-        uses: Swatinem/rust-cache@v2.8.0
+        uses: Swatinem/rust-cache@v2.8.1
 
       - name: run tests
         run: cargo test -- --test-threads=1
