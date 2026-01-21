@@ -3,12 +3,12 @@ name: validate
 on:
   push:
     branches:
-      - develop
+      - dev
       - "hotfix*"
 
   pull_request:
     branches:
-      - develop
+      - dev
       - "hotfix*"
     types:
       - edited
