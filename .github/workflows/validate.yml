@@ -29,7 +29,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: checkout origin repo
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.1
 
       - name: setup rust
         uses: dtolnay/rust-toolchain@master
@@ -37,7 +37,7 @@ jobs:
           toolchain: stable
 
       - name: cache rust
-        uses: Swatinem/rust-cache@v2.8.0
+        uses: Swatinem/rust-cache@v2.8.2
 
       - name: install cargo-audit
         run: cargo install cargo-audit --locked
@@ -52,7 +52,7 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: checkout origin repo
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.1
 
       - name: setup rust
         uses: dtolnay/rust-toolchain@master
@@ -61,7 +61,7 @@ jobs:
           toolchain: nightly
 
       - name: cache rust
-        uses: Swatinem/rust-cache@v2.8.0
+        uses: Swatinem/rust-cache@v2.8.2
 
       - name: check lint
         run: cargo +stable clippy -- --deny warnings
@@ -82,7 +82,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: checkout origin repo
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.1
 
       - name: setup rust
         uses: dtolnay/rust-toolchain@master
@@ -90,7 +90,7 @@ jobs:
           toolchain: stable
 
       - name: cache rust
-        uses: Swatinem/rust-cache@v2.8.0
+        uses: Swatinem/rust-cache@v2.8.2
 
       - name: check format
         run: cargo fmt --check
@@ -102,7 +102,7 @@ jobs:
     timeout-minutes: 45
     steps:
       - name: checkout origin repo
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.1
 
       - name: setup rust
         uses: dtolnay/rust-toolchain@master
@@ -110,7 +110,7 @@ jobs:
           toolchain: stable
 
       - name: cache rust
-        uses: Swatinem/rust-cache@v2.8.0
+        uses: Swatinem/rust-cache@v2.8.2
 
       - name: run tests
         run: cargo test -- --test-threads=1
