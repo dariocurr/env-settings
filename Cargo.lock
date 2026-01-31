@@ -101,17 +101,15 @@ checksum = "1aaf95b3e5c8f23aa320147307562d361db0ae0d51242340f558153b4eb2439b"
 name = "env-settings"
 version = "0.1.14"
 dependencies = [
- "env-settings-derive 0.1.13",
- "env-settings-utils 0.1.13",
+ "env-settings-derive 0.1.14 (registry+https://github.com/rust-lang/crates.io-index)",
+ "env-settings-utils 0.1.14 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "env-settings-derive"
-version = "0.1.13"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "100a3182b038834ec9bed5a703b21ba7f101d818ce0fe3bd1628d34ea769db0c"
+version = "0.1.14"
 dependencies = [
- "env-settings-utils 0.1.13",
+ "env-settings-utils 0.1.14 (registry+https://github.com/rust-lang/crates.io-index)",
  "proc-macro2",
  "quote",
  "syn",
@@ -120,21 +118,13 @@ dependencies = [
 [[package]]
 name = "env-settings-derive"
 version = "0.1.14"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b5fbb8e03bd3e3e7cca99872fc591157921fd32ba2e0a5f4aedbbd9cfbbf1146"
 dependencies = [
- "env-settings-utils 0.1.13",
+ "env-settings-utils 0.1.14 (registry+https://github.com/rust-lang/crates.io-index)",
  "proc-macro2",
  "quote",
  "syn",
-]
-
-[[package]]
-name = "env-settings-utils"
-version = "0.1.13"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "86b023564f1472aa6896effba721190a80e25acc31cad277b59a85267296d3cf"
-dependencies = [
- "dotenvy",
- "thiserror",
 ]
 
 [[package]]
@@ -144,6 +134,16 @@ dependencies = [
  "assert_fs",
  "dotenvy",
  "rstest",
+ "thiserror",
+]
+
+[[package]]
+name = "env-settings-utils"
+version = "0.1.14"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "de7e5c80ef42e70ff6299087c897132ae400d2a10620554e90402ee57df246e6"
+dependencies = [
+ "dotenvy",
  "thiserror",
 ]
 
@@ -366,18 +366,18 @@ dependencies = [
 
 [[package]]
 name = "proc-macro2"
-version = "1.0.105"
+version = "1.0.106"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "535d180e0ecab6268a3e718bb9fd44db66bbbc256257165fc699dadf70d16fe7"
+checksum = "8fd00f0bb2e90d81d1044c2b32617f68fcb9fa3bb7640c23e9c748e53fb30934"
 dependencies = [
  "unicode-ident",
 ]
 
 [[package]]
 name = "quote"
-version = "1.0.43"
+version = "1.0.44"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dc74d9a594b72ae6656596548f56f667211f8a97b3d4c3d467150794690dc40a"
+checksum = "21b2ebcf727b7760c461f091f9f0f539b77b8e87f2fd88131e7f1b433b3cece4"
 dependencies = [
  "proc-macro2",
 ]
@@ -520,9 +520,9 @@ dependencies = [
 
 [[package]]
 name = "slab"
-version = "0.4.11"
+version = "0.4.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7a2ae44ef20feb57a68b23d846850f861394c2e02dc425a50098ae8c90267589"
+checksum = "0c790de23124f9ab44544d7ac05d60440adc586479ce501c1d6d7da3cd8c9cf5"
 
 [[package]]
 name = "syn"
