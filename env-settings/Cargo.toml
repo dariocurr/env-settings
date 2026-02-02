@@ -17,3 +17,7 @@ version.workspace = true
 [dev-dependencies]
 env-settings-derive = "0.1"
 env-settings-utils = "0.1"
+
+[package.metadata.cargo-udeps.ignore]
+env-settings-derive = true
+env-settings-utils = true
