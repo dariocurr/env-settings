@@ -18,6 +18,9 @@ version.workspace = true
 env-settings-derive = "0.1"
 env-settings-utils = "0.1"
 
+# used in doc-tests; cargo-udeps cannot detect doc-test usage
 [package.metadata.cargo-udeps.ignore]
-env-settings-derive = true
-env-settings-utils = true
+development = [
+    "env-settings-derive",
+    "env-settings-utils",
+]
