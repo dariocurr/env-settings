@@ -99,20 +99,10 @@ checksum = "1aaf95b3e5c8f23aa320147307562d361db0ae0d51242340f558153b4eb2439b"
 
 [[package]]
 name = "env-settings"
-version = "0.1.14"
+version = "0.1.15"
 dependencies = [
- "env-settings-derive 0.1.14 (registry+https://github.com/rust-lang/crates.io-index)",
- "env-settings-utils 0.1.14 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
-name = "env-settings-derive"
-version = "0.1.14"
-dependencies = [
- "env-settings-utils 0.1.14 (registry+https://github.com/rust-lang/crates.io-index)",
- "proc-macro2",
- "quote",
- "syn",
+ "env-settings-derive 0.1.14",
+ "env-settings-utils 0.1.14",
 ]
 
 [[package]]
@@ -121,20 +111,20 @@ version = "0.1.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b5fbb8e03bd3e3e7cca99872fc591157921fd32ba2e0a5f4aedbbd9cfbbf1146"
 dependencies = [
- "env-settings-utils 0.1.14 (registry+https://github.com/rust-lang/crates.io-index)",
+ "env-settings-utils 0.1.14",
  "proc-macro2",
  "quote",
  "syn",
 ]
 
 [[package]]
-name = "env-settings-utils"
-version = "0.1.14"
+name = "env-settings-derive"
+version = "0.1.15"
 dependencies = [
- "assert_fs",
- "dotenvy",
- "rstest",
- "thiserror",
+ "env-settings-utils 0.1.14",
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]
@@ -144,6 +134,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "de7e5c80ef42e70ff6299087c897132ae400d2a10620554e90402ee57df246e6"
 dependencies = [
  "dotenvy",
+ "thiserror",
+]
+
+[[package]]
+name = "env-settings-utils"
+version = "0.1.15"
+dependencies = [
+ "assert_fs",
+ "dotenvy",
+ "rstest",
  "thiserror",
 ]
 
@@ -556,11 +556,11 @@ checksum = "8f50febec83f5ee1df3015341d8bd429f2d1cc62bcba7ea2076759d315084683"
 
 [[package]]
 name = "test-env-settings"
-version = "0.1.14"
+version = "0.1.15"
 dependencies = [
  "dotenvy",
- "env-settings-derive 0.1.14",
- "env-settings-utils 0.1.14",
+ "env-settings-derive 0.1.15",
+ "env-settings-utils 0.1.15",
  "rstest",
 ]
 
