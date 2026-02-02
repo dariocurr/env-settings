@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: checkout origin repo
         uses: actions/checkout@v6.0.2
+        with:
+          fetch-depth: 0
 
       - name: setup rust
         uses: dtolnay/rust-toolchain@master
@@ -39,7 +41,7 @@ jobs:
           git config user.email "actions@github.com"
 
       - name: release rust library
-        run: cargo release --execute --no-confirm --tag-prefix "" --unpublished
+        run: cargo release --workspace --execute --no-confirm --tag-prefix "" --unpublished
 
       - name: output tag
         id: tag
