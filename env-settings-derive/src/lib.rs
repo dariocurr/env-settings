@@ -172,6 +172,7 @@ fn implement(input: &utils::input::EnvSettingsInput) -> TokenStream {
 
             /// Create a new instance using just the environment variables. Skipped fields must be passed.
             /// If something fails, it returns an `env_settings_utils::EnvSettingsError` error
+            #[allow(clippy::too_many_arguments)]
             pub fn new(#(#new_args),*) -> env_settings_utils::EnvSettingsResult<Self> {
                 #pre_impls
                 let instance = Self {
@@ -185,6 +186,7 @@ fn implement(input: &utils::input::EnvSettingsInput) -> TokenStream {
             /// as parameter wrapped in an `Option` object. Then if the parameter is `Some`, it is used,
             /// otherwise the value is recoved from the environment variables. Skipped fields must be passed.
             /// If something fails, it returns an `env_settings_utils::EnvSettingsError` error
+            #[allow(clippy::too_many_arguments)]
             pub fn from_env(#(#from_env_args),*) -> env_settings_utils::EnvSettingsResult<Self> {
                 #pre_impls
                 let instance = Self {
