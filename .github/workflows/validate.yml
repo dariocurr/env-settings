@@ -27,7 +27,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: checkout origin repo
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v6.0.3
 
       - name: setup rust
         uses: dtolnay/rust-toolchain@master
@@ -51,7 +51,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: checkout origin repo
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v6.0.3
 
       - name: setup rust
         uses: dtolnay/rust-toolchain@master
@@ -69,7 +69,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: checkout origin repo
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v6.0.3
 
       - name: setup rust
         uses: dtolnay/rust-toolchain@master
@@ -91,7 +91,7 @@ jobs:
     timeout-minutes: 45
     steps:
       - name: checkout origin repo
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v6.0.3
 
       - name: setup rust
         uses: dtolnay/rust-toolchain@master
