@@ -30,13 +30,13 @@ When you add the `EnvSettings` derive to a `struct`, two public methods are adde
     fn from_env(...) -> env_settings_utils::EnvSettingsResult<Self>
     ```
 
-    Create a new instance using just the environment variables. Skipped fields must be passed. If something fails, it returns an `env_settings_utils::EnvSettingsError` error
+    Create a new instance using environment variables. Skipped fields must be passed. If something fails, it returns an `env_settings_utils::EnvSettingsError` error.
 
 - ```rust
     fn new(...) -> env_settings_utils::EnvSettingsResult<Self>
     ```
 
-    Create a new instance using a combination of environment variables and parameters. More in detail, every field that can be initialized by the environment variables can be passed as parameter wrapped in an `Option` object. Then if the parameter is `Some`, it is used, otherwise the value is recoved from the environment variables. Skipped fields must be passed. If something fails, it returns an `env_settings_utils::EnvSettingsError` error
+    Create a new instance using environment variables and parameters. Every field initialized from environment variables can be passed as an `Option`. If parameter is `Some`, it is used; otherwise value is recovered from environment variables. Skipped fields must be passed. If something fails, it returns an `env_settings_utils::EnvSettingsError` error.
 
 ### Basic
 
@@ -49,6 +49,7 @@ export favourite_number=42
 use env_settings_derive::EnvSettings;
 
 #[derive(EnvSettings)]
+#[env_settings(delay)]
 struct MyStruct {
     name: String,
 
@@ -78,7 +79,7 @@ export MY_BIRTH_DATE=01/01/1970
 use env_settings_derive::EnvSettings;
 
 #[derive(EnvSettings)]
-#[env_settings(case_insensitive, file_path = ".env", prefix="MY_STRUCT_")]
+#[env_settings(delay, case_insensitive, file_path = ".env", prefix="MY_STRUCT_")]
 struct MyStruct {
     #[env_settings(default = "paolo")]
     name: String,
@@ -151,7 +152,7 @@ Before starting to work on a contribution please read:
 
 - [Code of Conduct](https://github.com/dariocurr/.github/blob/main/.github/CODE_OF_CONDUCT.md)
 - [Contributing](https://github.com/dariocurr/.github/blob/main/.github/CONTRIBUTING.md)
-- [Goverance](https://github.com/dariocurr/.github/blob/main/.github/GOVERNANCE.md)
+- [Governance](https://github.com/dariocurr/.github/blob/main/.github/GOVERNANCE.md)
 - [Security](https://github.com/dariocurr/.github/blob/main/.github/SECURITY.md)
 - [Support](https://github.com/dariocurr/.github/blob/main/.github/SUPPORT.md)
 
