@@ -92,7 +92,7 @@ checksum = "1aaf95b3e5c8f23aa320147307562d361db0ae0d51242340f558153b4eb2439b"
 
 [[package]]
 name = "env-settings"
-version = "0.1.16"
+version = "0.1.17"
 dependencies = [
  "env-settings-derive 0.1.15",
  "env-settings-utils 0.1.15",
@@ -112,12 +112,12 @@ dependencies = [
 
 [[package]]
 name = "env-settings-derive"
-version = "0.1.16"
+version = "0.1.17"
 dependencies = [
  "env-settings-utils 0.1.15",
  "proc-macro2",
  "quote",
- "syn 3.0.3",
+ "syn 3.0.4",
 ]
 
 [[package]]
@@ -132,7 +132,7 @@ dependencies = [
 
 [[package]]
 name = "env-settings-utils"
-version = "0.1.16"
+version = "0.1.17"
 dependencies = [
  "assert_fs",
  "dotenvy",
@@ -176,7 +176,7 @@ checksum = "9fb9654ba8355388abeb8dcb4fc62f511300867002afc858860463bdd9fe0c44"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 3.0.3",
+ "syn 3.0.4",
 ]
 
 [[package]]
@@ -474,7 +474,7 @@ checksum = "e7a5d71263a5a7d47b41f6b3f06ba276f10cc18b0931f1799f710578e2309348"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 3.0.3",
+ "syn 3.0.4",
 ]
 
 [[package]]
@@ -496,9 +496,9 @@ dependencies = [
 
 [[package]]
 name = "syn"
-version = "3.0.3"
+version = "3.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "53e9bae58849f64dfa4f5d5ae372c8341f7305f82a3868709269343628b659a3"
+checksum = "e6275cddf4610d1775e6d1fe9469b2e77d0f39fd98fb7450901b821e0c53649f"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -525,11 +525,11 @@ checksum = "8f50febec83f5ee1df3015341d8bd429f2d1cc62bcba7ea2076759d315084683"
 
 [[package]]
 name = "test-env-settings"
-version = "0.1.16"
+version = "0.1.17"
 dependencies = [
  "dotenvy",
- "env-settings-derive 0.1.16",
- "env-settings-utils 0.1.16",
+ "env-settings-derive 0.1.17",
+ "env-settings-utils 0.1.17",
  "rstest",
 ]
 
@@ -550,7 +550,7 @@ checksum = "bc04cd3e1236dd4a98afca4569f2deb3f120e5422a4023be2cb683f8486292af"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 3.0.3",
+ "syn 3.0.4",
 ]
 
 [[package]]
